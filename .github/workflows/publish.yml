@@ -1,29 +1,51 @@
 name: Release
 on:
+  push:
+    branches: ["main"]
   workflow_dispatch:
+
 permissions:
   contents: write
   issues: write
   pull-requests: write
   id-token: write
+
 concurrency:
   group: release
   cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v6
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
         with:
-          node-version: 24
-          registry-url: https://registry.npmjs.org
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
           package-manager-cache: false
-      - run: npm install
-      - run: npm run check
-      - run: npm test
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Check
+        run: npm run check
+
+      - name: Test
+        run: npm test
+
+      - name: Audit dependencies
+        run: npm run audit
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
