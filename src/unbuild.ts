@@ -1,10 +1,9 @@
-import { chromium, type Browser, type Page } from "playwright";
+import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { assertPublicUrl } from "./discover.js";
+import { assertPublicUrl, discoverUrls } from "./discover.js";
 import { extractPage, type PageEvidence } from "./extract.js";
-import { discoverUrls } from "./discover.js";
-import { renderAggregateReport, renderReport } from "./report.js";
+import { renderAggregateReport } from "./report.js";
 
 export interface UnbuildOptions {
   output?: string;
@@ -12,6 +11,8 @@ export interface UnbuildOptions {
   timeout?: number;
   viewports?: Array<{name:string;width:number;height:number}>;
   headless?: boolean;
+  executablePath?: string;
+  cdpEndpoint?: string;
 }
 
 export interface UnbuildResult {
@@ -36,6 +37,26 @@ function pageName(url:string):string {
   return path ? path.slice(0,100) : "home";
 }
 
+async function launchBrowser(options: UnbuildOptions): Promise<Browser> {
+  if (options.cdpEndpoint) {
+    return chromium.connectOverCDP(options.cdpEndpoint, { timeout: options.timeout ?? 30000 });
+  }
+  return chromium.launch({
+    headless: options.headless ?? true,
+    executablePath: options.executablePath
+  });
+}
+
+async function getContext(browser: Browser, connected: boolean): Promise<BrowserContext> {
+  if (connected) {
+    const existing = browser.contexts()[0];
+    if (existing) return existing;
+  }
+  return browser.newContext({
+    viewport: {width: DEFAULT_VIEWPORTS[0].width, height: DEFAULT_VIEWPORTS[0].height}
+  });
+}
+
 export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promise<UnbuildResult> {
   const root = new URL(inputUrl);
   await assertPublicUrl(root);
@@ -44,15 +65,21 @@ export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promis
   const timeout = options.timeout ?? 30000;
   const maxPages = Math.max(1, Math.min(options.pages ?? 12, 100));
 
+  if (options.cdpEndpoint && options.executablePath) {
+    throw new Error("Choose either --cdp or --browser, not both.");
+  }
+
   await mkdir(output,{recursive:true});
   for (const dir of ["screenshots","pages","evidence","tokens","components","ux","motion","responsive","assets"]) {
     await mkdir(join(output,dir),{recursive:true});
   }
 
-  const browser:Browser = await chromium.launch({headless: options.headless ?? true});
+  const connected = Boolean(options.cdpEndpoint);
+  const browser = await launchBrowser(options);
   const evidence:PageEvidence[]=[];
   try {
-    const page:Page = await browser.newPage({viewport:{width:viewports[0].width,height:viewports[0].height}});
+    const context = await getContext(browser, connected);
+    const page:Page = context.pages()[0] ?? await context.newPage();
     page.setDefaultTimeout(timeout);
 
     await page.route("**/*", async (route) => {
@@ -93,15 +120,10 @@ export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promis
       }
     }
 
-    const aggregate=evidence[0];
-    if (aggregate) {
+    if (evidence.length) {
       await writeFile(join(output,"evidence","all-pages.json"),JSON.stringify(evidence,null,2));
-      await writeFile(join(output,"tokens","tokens.json"),JSON.stringify(
-        evidence.map(x=>x.tokens),null,2
-      ));
-      await writeFile(join(output,"components","components.json"),JSON.stringify(
-        evidence.map(x=>({url:x.url,components:x.components})),null,2
-      ));
+      await writeFile(join(output,"tokens","tokens.json"),JSON.stringify(evidence.map(x=>x.tokens),null,2));
+      await writeFile(join(output,"components","components.json"),JSON.stringify(evidence.map(x=>({url:x.url,components:x.components})),null,2));
       await writeFile(join(output,"DESIGN.md"),renderAggregateReport(evidence, root.toString()));
       await writeFile(join(output,"AI.md"),renderAggregateReport(evidence, root.toString(), true));
     }
@@ -109,9 +131,9 @@ export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promis
     await writeFile(join(output,"README.md"),[
       "# Unbuild output",
       "",
-      `Source: ${root}`,
-      `Pages analyzed: ${evidence.length}`,
-      `Viewports: ${viewports.map(v=>v.name+" ("+v.width+"×"+v.height+")").join(", ")}`,
+      "Source: " + root,
+      "Pages analyzed: " + evidence.length,
+      "Viewports: " + viewports.map(v=>v.name+" ("+v.width+"×"+v.height+")").join(", "),
       "",
       "This directory contains measured browser evidence and an AI-readable reconstruction reference.",
       ""
