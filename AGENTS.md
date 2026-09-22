@@ -23,8 +23,9 @@ Install:
 
 ```bash
 npm install
-npx playwright install chromium
 ```
+
+The package installs the matching Chromium browser automatically. If browser installation is intentionally skipped, use `npx playwright install chromium` or an installed browser via `--browser` / `--cdp`.
 
 Check:
 
