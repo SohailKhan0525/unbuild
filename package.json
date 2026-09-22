@@ -59,7 +59,7 @@
     "playwright": "^1.55.0"
   },
   "devDependencies": {
-    "@types/node": "^24.0.0",
+    "@types/node": "^26.6.2",
     "typescript": "^5.9.0",
     "semantic-release": "^24.2.7",
     "@semantic-release/commit-analyzer": "^13.0.1",
