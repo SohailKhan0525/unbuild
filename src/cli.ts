@@ -2,7 +2,7 @@
 import { unbuild } from "./unbuild.js";
 
 function help(){
-  console.log(\`
+  console.log(`
 unbuild — reverse-engineer a rendered website into an AI-ready design reference.
 
 Usage:
@@ -19,7 +19,7 @@ Options:
 
 Android / Termux:
   Use --cdp with a Chromium-compatible browser exposed on a local CDP endpoint.
-\`);
+`);
 }
 
 const args=process.argv.slice(2);
@@ -41,8 +41,8 @@ for(let i=0;i<args.length;i++){
 try{
   console.log("Unbuilding "+url+"…");
   const result=await unbuild(url,{output,timeout,pages,executablePath,cdpEndpoint,headless:!args.includes("--no-headless")});
-  console.log(\`✓ Output: \${result.output}\`);
-  console.log(\`✓ Screenshots: \${result.screenshots}\`);
+  console.log(`✓ Output: ${result.output}`);
+  console.log(`✓ Screenshots: ${result.screenshots}`);
 }catch(error){
   console.error("Unbuild failed:",error instanceof Error?error.message:error);
   process.exit(1);
