@@ -1,6 +1,7 @@
 import { chromium, type Browser, type Page } from "playwright";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { assertPublicUrl } from "./discover.js";
 import { extractPage, type PageEvidence } from "./extract.js";
 import { discoverUrls } from "./discover.js";
 import { renderAggregateReport, renderReport } from "./report.js";
@@ -37,7 +38,7 @@ function pageName(url:string):string {
 
 export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promise<UnbuildResult> {
   const root = new URL(inputUrl);
-  if (!/^https?:$/.test(root.protocol)) throw new Error("Only http:// and https:// URLs are supported.");
+  await assertPublicUrl(root);
   const output = options.output ?? join(process.cwd(), "unbuild-output");
   const viewports = options.viewports ?? DEFAULT_VIEWPORTS;
   const timeout = options.timeout ?? 30000;
@@ -54,7 +55,7 @@ export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promis
     const page:Page = await browser.newPage({viewport:{width:viewports[0].width,height:viewports[0].height}});
     page.setDefaultTimeout(timeout);
 
-    const urls=await discoverUrls(page,root,maxPages);
+    await page.route("**/*", async (route) => {\n      try { await assertPublicUrl(new URL(route.request().url())); await route.continue(); } catch { await route.abort("blockedbyclient"); }\n    });\n\n    const urls=await discoverUrls(page,root,maxPages,timeout);
     await writeFile(join(output,"evidence","pages.json"),JSON.stringify(urls,null,2));
 
     for (const url of urls) {
@@ -92,8 +93,8 @@ export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promis
       await writeFile(join(output,"components","components.json"),JSON.stringify(
         evidence.map(x=>({url:x.url,components:x.components})),null,2
       ));
-      await writeFile(join(output,"DESIGN.md"),renderReport(aggregate));
-      await writeFile(join(output,"AI.md"),renderReport(aggregate,true));
+      await writeFile(join(output,"DESIGN.md"),renderAggregateReport(evidence, root.toString()));
+      await writeFile(join(output,"AI.md"),renderAggregateReport(evidence, root.toString(), true));
     }
 
     await writeFile(join(output,"README.md"),[
