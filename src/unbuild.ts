@@ -26,12 +26,12 @@ const DEFAULT_VIEWPORTS = [
 ];
 
 export function safeName(value:string):string {
-  return value.replace(/^https?:\\/\\//,"").replace(/[^a-zA-Z0-9._-]+/g,"-").replace(/-+/g,"-").replace(/^-|-$/g,"").slice(0,80) || "site";
+  return value.replace(/^https?:\/\//,"").replace(/[^a-zA-Z0-9._-]+/g,"-").replace(/-+/g,"-").replace(/^-|-$/g,"").slice(0,80) || "site";
 }
 
 function pageName(url:string):string {
   const u=new URL(url);
-  const path=u.pathname.replace(/^\\/|\\/$/g,"").replace(/[^a-zA-Z0-9._-]+/g,"-");
+  const path=u.pathname.replace(/^\/|\/$/g,"").replace(/[^a-zA-Z0-9._-]+/g,"-");
   return path ? path.slice(0,100) : "home";
 }
 
