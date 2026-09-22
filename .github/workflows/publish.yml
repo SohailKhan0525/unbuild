@@ -44,6 +44,18 @@ jobs:
       - name: Audit dependencies
         run: npm run audit
 
+      - name: Bootstrap initial published version tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git ls-remote --exit-code --tags origin refs/tags/v1.0.0 >/dev/null 2>&1; then
+            echo "v1.0.0 already exists"
+            exit 0
+          fi
+          echo "Creating v1.0.0 because the initial package version was published manually."
+          git tag -a v1.0.0 -m "chore(release): v1.0.0"
+          git push origin v1.0.0
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
