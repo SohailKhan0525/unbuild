@@ -30,12 +30,6 @@ jobs:
           npm install @agent-qofeno/unbuild@latest
           npx unbuild --help
 
-      - name: Install Chromium
-        shell: bash
-        run: |
-          cd /tmp/unbuild-smoke
-          npx playwright install --with-deps chromium
-
       - name: Run against Linear
         shell: bash
         run: |
