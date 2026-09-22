@@ -3,7 +3,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { extractPage, type PageEvidence } from "./extract.js";
 import { discoverUrls } from "./discover.js";
-import { renderAggregateReport } from "./report.js";
+import { renderAggregateReport, renderReport } from "./report.js";
 
 export interface UnbuildOptions {
   output?: string;
