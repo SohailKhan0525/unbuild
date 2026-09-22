@@ -7,15 +7,21 @@ permissions:
 
 jobs:
   smoke:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Check published package
+        shell: bash
         run: |
           set -euxo pipefail
           npm view @agent-qofeno/unbuild version
           npm pack @agent-qofeno/unbuild --dry-run
 
       - name: Install published package
+        shell: bash
         run: |
           set -euxo pipefail
           mkdir -p /tmp/unbuild-smoke
@@ -25,14 +31,16 @@ jobs:
           npx unbuild --help
 
       - name: Install Chromium
+        shell: bash
         run: |
           cd /tmp/unbuild-smoke
           npx playwright install --with-deps chromium
 
       - name: Run against Linear
+        shell: bash
         run: |
           cd /tmp/unbuild-smoke
-          timeout 180s npx unbuild https://linear.app --output ./linear-unbuild --pages 3 --timeout 30000
+          npx unbuild https://linear.app --output ./linear-unbuild --pages 3 --timeout 30000
           test -s ./linear-unbuild/AI.md
           test -s ./linear-unbuild/DESIGN.md
           test -s ./linear-unbuild/evidence/all-pages.json
