@@ -55,7 +55,16 @@ export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promis
     const page:Page = await browser.newPage({viewport:{width:viewports[0].width,height:viewports[0].height}});
     page.setDefaultTimeout(timeout);
 
-    await page.route("**/*", async (route) => {\n      try { await assertPublicUrl(new URL(route.request().url())); await route.continue(); } catch { await route.abort("blockedbyclient"); }\n    });\n\n    const urls=await discoverUrls(page,root,maxPages,timeout);
+    await page.route("**/*", async (route) => {
+      try {
+        await assertPublicUrl(new URL(route.request().url()));
+        await route.continue();
+      } catch {
+        await route.abort("blockedbyclient");
+      }
+    });
+
+    const urls = await discoverUrls(page, root, maxPages, timeout);
     await writeFile(join(output,"evidence","pages.json"),JSON.stringify(urls,null,2));
 
     for (const url of urls) {

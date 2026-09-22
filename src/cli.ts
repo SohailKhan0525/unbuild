@@ -21,10 +21,12 @@ if(args.length===0||args.includes("-h")||args.includes("--help")){help();process
 const url=args.find(x=>!x.startsWith("-"));
 if(!url){help();process.exit(1)}
 let output:string|undefined;
-let timeout=30000;\nlet pages=12;
+let timeout=30000;
+let pages=12;
 for(let i=0;i<args.length;i++){
   if(args[i]==="-o"||args[i]==="--output") output=args[++i];
-  if(args[i]==="--timeout") timeout=Number(args[++i]);\n  if(args[i]==="--pages") pages=Number(args[++i]);
+  if(args[i]==="--timeout") timeout=Number(args[++i]);
+  if(args[i]==="--pages") pages=Number(args[++i]);
 }
 try{
   console.log("Unbuilding "+url+"…");
