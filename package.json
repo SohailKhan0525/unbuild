@@ -1,21 +1,70 @@
 {
-  "name":"@agent-qofeno/unbuild",
-  "version":"1.0.0",
-  "description":"Reverse-engineer a live website into an AI-ready UI, UX, design-system, responsive and motion reference.",
-  "type":"module",
-  "bin":{"unbuild":"./dist/cli.js"},
-  "main":"./dist/index.js",
-  "types":"./dist/index.d.ts",
-  "exports":{".":{"types":"./dist/index.d.ts","import":"./dist/index.js"}},
-  "files":["dist","README.md","LICENSE"],
-  "engines":{"node":">=22.14.0"},
-  "scripts":{"build":"tsc -p tsconfig.json","check":"tsc -p tsconfig.json --noEmit","test":"npm run build && node --test","prepublishOnly":"npm run check && npm run build"},
-  "repository":{"type":"git","url":"https://github.com/SohailKhan0525/unbuild.git"},
-  "bugs":{"url":"https://github.com/SohailKhan0525/unbuild/issues"},
-  "homepage":"https://github.com/SohailKhan0525/unbuild#readme",
-  "publishConfig":{"access":"public"},
-  "keywords":["website","design-system","reverse-engineering","ui","ux","playwright","design-tokens","ai","claude","codex","gemini","cli"],
-  "license":"MIT",
-  "dependencies":{"playwright":"^1.55.0"},
-  "devDependencies":{"@types/node":"^24.0.0","typescript":"^5.9.0","semantic-release":"^24.2.7"}
+  "name": "@agent-qofeno/unbuild",
+  "version": "1.0.0",
+  "description": "Reverse-engineer a live website into an AI-ready UI, UX, design-system, responsive and motion reference.",
+  "type": "module",
+  "bin": {
+    "unbuild": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test",
+    "prepublishOnly": "npm run check && npm run build",
+    "audit": "npm audit --audit-level=high"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SohailKhan0525/unbuild.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SohailKhan0525/unbuild/issues"
+  },
+  "homepage": "https://github.com/SohailKhan0525/unbuild#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "website",
+    "design-system",
+    "reverse-engineering",
+    "ui",
+    "ux",
+    "playwright",
+    "design-tokens",
+    "ai",
+    "claude",
+    "codex",
+    "gemini",
+    "cli"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.55.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0",
+    "semantic-release": "^24.2.7",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/release-notes-generator": "^14.0.3",
+    "@semantic-release/npm": "^13.1.2",
+    "@semantic-release/github": "^11.0.6"
+  }
 }
