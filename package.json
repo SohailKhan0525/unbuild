@@ -4,7 +4,7 @@
   "description": "Reverse-engineer a live website into an AI-ready UI, UX, design-system, responsive and motion reference.",
   "type": "module",
   "bin": {
-    "unbuild": "./dist/cli.js"
+    "unbuild": "dist/cli.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/SohailKhan0525/unbuild.git"
+    "url": "git+https://github.com/SohailKhan0525/unbuild.git"
   },
   "bugs": {
     "url": "https://github.com/SohailKhan0525/unbuild/issues"
