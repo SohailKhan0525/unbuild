@@ -1,6 +1,6 @@
 {
   "name":"@agent-qofeno/unbuild",
-  "version":"0.1.0",
+  "version":"1.0.0",
   "description":"Reverse-engineer a live website into an AI-ready UI, UX, design-system, responsive and motion reference.",
   "type":"module",
   "bin":{"unbuild":"./dist/cli.js"},
@@ -9,7 +9,7 @@
   "exports":{".":{"types":"./dist/index.d.ts","import":"./dist/index.js"}},
   "files":["dist","README.md","LICENSE"],
   "engines":{"node":">=22.14.0"},
-  "scripts":{"build":"tsc -p tsconfig.json","check":"tsc -p tsconfig.json --noEmit","test":"node --test","prepublishOnly":"npm run check && npm run build"},
+  "scripts":{"build":"tsc -p tsconfig.json","check":"tsc -p tsconfig.json --noEmit","test":"npm run build && node --test","prepublishOnly":"npm run check && npm run build"},
   "repository":{"type":"git","url":"https://github.com/SohailKhan0525/unbuild.git"},
   "bugs":{"url":"https://github.com/SohailKhan0525/unbuild/issues"},
   "homepage":"https://github.com/SohailKhan0525/unbuild#readme",
