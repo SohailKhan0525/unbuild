@@ -19,7 +19,7 @@ unbuild is a Node.js CLI with platform-neutral extraction code.
 - **Android / Termux:** Node.js can run in Termux, but Playwright's bundled desktop Chromium is not an Android host browser. Use `--cdp` to connect unbuild to a Chromium-compatible browser exposing the Chrome DevTools Protocol.
 - **Other Unix-like environments:** use `--browser` or `--cdp` when a managed Playwright browser is unavailable.
 
-The npm package itself does not contain OS-specific native binaries. The browser engine is the platform-specific part and must either be installed locally or exposed over CDP.
+The npm package installs the Playwright Chromium browser during package installation on supported desktop platforms. If browser installation is intentionally skipped or unavailable, use `--browser` with an installed Chromium/Chrome/Edge binary or `--cdp` with an existing Chromium browser. Android / Termux uses CDP rather than the bundled desktop browser.
 
 ## Install
 
@@ -28,6 +28,8 @@ Run it without installing globally:
 ```bash
 npx @agent-qofeno/unbuild https://www.example.com
 ```
+
+The package installs the matching Playwright Chromium browser as part of `npm install`, so the normal `npx` and global-install flows do not require a separate `npx playwright install` step.
 
 Or install it:
 
@@ -205,14 +207,15 @@ Requirements:
 
 - Node.js 22.14+
 - npm
-- Chromium installed by Playwright, or an installed Chromium-compatible browser
+- Chromium installed by the Playwright browser dependency, or an installed Chromium-compatible browser
 
 Install dependencies:
 
 ```bash
 npm install
-npx playwright install chromium
 ```
+
+If browser installation is intentionally skipped, install Chromium separately with `npx playwright install chromium`, or use `--browser` / `--cdp`.
 
 Verify the repository:
 
