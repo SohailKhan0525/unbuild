@@ -1,11 +1,8 @@
 name: Dependency review
-
 on:
   pull_request:
-
 permissions:
   contents: read
-
 jobs:
   dependency-review:
     runs-on: ubuntu-latest
@@ -14,3 +11,4 @@ jobs:
         uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: high
+          retry-on-snapshot-warnings: true
