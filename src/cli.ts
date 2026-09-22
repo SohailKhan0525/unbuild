@@ -16,6 +16,7 @@ Options:
   --cdp <url>               Connect to an existing Chromium browser over CDP
   --no-headless              Show Chromium while analyzing
   --verbose                  Show detailed live progress (default)
+  --quiet                    Suppress live progress
   -h, --help                Show help
 
 Android / Termux:
