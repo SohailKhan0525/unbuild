@@ -33,7 +33,13 @@ export async function assertPublicUrl(input: URL): Promise<void> {
   }
 }
 
-export async function discoverUrls(page: Page, root: URL, limit: number, timeout = 30000): Promise<string[]> {
+export async function discoverUrls(
+  page: Page,
+  root: URL,
+  limit: number,
+  timeout = 30000,
+  onProgress?: (message: string) => void
+): Promise<string[]> {
   await assertPublicUrl(root);
   const seen = new Set<string>();
   const queue = [root.toString()];
@@ -41,9 +47,11 @@ export async function discoverUrls(page: Page, root: URL, limit: number, timeout
     const current = queue.shift()!;
     if (seen.has(current)) continue;
     const currentUrl = new URL(current);
+    onProgress?.(`Discovering page ${seen.size + 1}/${limit}: ${currentUrl.toString()}`);
     await assertPublicUrl(currentUrl);
     seen.add(current);
     await page.goto(current, { waitUntil: "domcontentloaded", timeout }).catch(() => {});
+    onProgress?.(`Scanning links on page ${seen.size}/${limit}`);
     const links = await page.locator("a[href]").evaluateAll((nodes) =>
       nodes.map((node) => (node as HTMLAnchorElement).href)
     );

@@ -13,6 +13,7 @@ export interface UnbuildOptions {
   headless?: boolean;
   executablePath?: string;
   cdpEndpoint?: string;
+  onProgress?: (message: string) => void;
 }
 
 export interface UnbuildResult {
@@ -37,6 +38,24 @@ function pageName(url:string):string {
   return path ? path.slice(0,100) : "home";
 }
 
+function progress(options: UnbuildOptions, message: string): void {
+  options.onProgress?.(message);
+}
+
+async function withHeartbeat<T>(options: UnbuildOptions, message: string, operation: Promise<T>): Promise<T> {
+  progress(options, message);
+  const started = Date.now();
+  const timer = setInterval(() => {
+    const elapsed = Math.floor((Date.now() - started) / 1000);
+    progress(options, `${message} — ${elapsed}s elapsed`);
+  }, 5000);
+  try {
+    return await operation;
+  } finally {
+    clearInterval(timer);
+  }
+}
+
 async function launchBrowser(options: UnbuildOptions): Promise<Browser> {
   if (options.cdpEndpoint) {
     return chromium.connectOverCDP(options.cdpEndpoint, { timeout: options.timeout ?? 30000 });
@@ -59,6 +78,7 @@ async function getContext(browser: Browser, connected: boolean): Promise<Browser
 
 export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promise<UnbuildResult> {
   const root = new URL(inputUrl);
+  progress(options, "Validating target URL and checking network safety…");
   await assertPublicUrl(root);
   const output = options.output ?? join(process.cwd(), "unbuild-output");
   const viewports = options.viewports ?? DEFAULT_VIEWPORTS;
@@ -69,13 +89,18 @@ export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promis
     throw new Error("Choose either --cdp or --browser, not both.");
   }
 
+  progress(options, `Preparing output directory: ${output}`);
   await mkdir(output,{recursive:true});
   for (const dir of ["screenshots","pages","evidence","tokens","components","ux","motion","responsive","assets"]) {
     await mkdir(join(output,dir),{recursive:true});
   }
 
   const connected = Boolean(options.cdpEndpoint);
-  const browser = await launchBrowser(options);
+  const browser = await withHeartbeat(
+    options,
+    connected ? `Connecting to Chromium over CDP: ${options.cdpEndpoint}` : "Launching Playwright Chromium…",
+    launchBrowser(options)
+  );
   const evidence:PageEvidence[]=[];
   try {
     const context = await getContext(browser, connected);
@@ -91,24 +116,53 @@ export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promis
       }
     });
 
-    const urls = await discoverUrls(page, root, maxPages, timeout);
+    progress(options, `Discovering up to ${maxPages} same-origin pages…`);
+    const urls = await discoverUrls(page, root, maxPages, timeout, (message) => progress(options, message));
+    progress(options, `Discovered ${urls.length} page(s).`);
     await writeFile(join(output,"evidence","pages.json"),JSON.stringify(urls,null,2));
 
-    for (const url of urls) {
+    for (let pageIndex = 0; pageIndex < urls.length; pageIndex++) {
+      const url = urls[pageIndex];
       const name=pageName(url);
-      await page.goto(url,{waitUntil:"networkidle",timeout}).catch(async()=>{ await page.goto(url,{waitUntil:"domcontentloaded",timeout}); });
+      progress(options, `Analyzing page ${pageIndex + 1}/${urls.length}: ${url}`);
+      await withHeartbeat(
+        options,
+        `Loading page ${pageIndex + 1}/${urls.length} — waiting for network idle`,
+        page.goto(url,{waitUntil:"networkidle",timeout})
+      ).catch(async()=>{
+        progress(options, `Network idle was not reached; retrying page ${pageIndex + 1}/${urls.length} with DOMContentLoaded`);
+        await withHeartbeat(
+          options,
+          `Loading page ${pageIndex + 1}/${urls.length} — DOMContentLoaded fallback`,
+          page.goto(url,{waitUntil:"domcontentloaded",timeout})
+        );
+      });
       await page.waitForTimeout(300);
+      progress(options, `Extracting design evidence from page ${pageIndex + 1}/${urls.length}`);
       const data=await extractPage(page,url);
       evidence.push(data);
       await writeFile(join(output,"pages",name+".json"),JSON.stringify(data,null,2));
 
       for (const viewport of viewports) {
+        progress(options, `Capturing ${viewport.name} ${viewport.width}×${viewport.height} for page ${pageIndex + 1}/${urls.length}`);
         await page.setViewportSize({width:viewport.width,height:viewport.height});
-        await page.goto(url,{waitUntil:"networkidle",timeout}).catch(async()=>{ await page.goto(url,{waitUntil:"domcontentloaded",timeout}); });
+        await withHeartbeat(
+          options,
+          `Rendering ${viewport.name} — waiting for network idle`,
+          page.goto(url,{waitUntil:"networkidle",timeout})
+        ).catch(async()=>{
+          progress(options, `Network idle was not reached for ${viewport.name}; using DOMContentLoaded fallback`);
+          await withHeartbeat(
+            options,
+            `Rendering ${viewport.name} — DOMContentLoaded fallback`,
+            page.goto(url,{waitUntil:"domcontentloaded",timeout})
+          );
+        });
         await page.waitForTimeout(200);
         const shotDir=join(output,"screenshots",viewport.name);
         await mkdir(shotDir,{recursive:true});
         await page.screenshot({path:join(shotDir,name+".png"),fullPage:true});
+        progress(options, `Extracting responsive evidence for ${viewport.name}`);
         const responsive=await extractPage(page,url);
         await writeFile(join(output,"responsive",viewport.name+"-"+name+".json"),JSON.stringify({
           viewport,
@@ -120,6 +174,7 @@ export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promis
       }
     }
 
+    progress(options, "Writing aggregate evidence and AI-readable reports…");
     if (evidence.length) {
       await writeFile(join(output,"evidence","all-pages.json"),JSON.stringify(evidence,null,2));
       await writeFile(join(output,"tokens","tokens.json"),JSON.stringify(evidence.map(x=>x.tokens),null,2));
@@ -139,6 +194,7 @@ export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promis
       ""
     ].join("\n"));
 
+    progress(options, `Complete — ${evidence.length} page(s), ${evidence.length * viewports.length} screenshot(s)`);
     return {output,pages:evidence.length,screenshots:evidence.length*viewports.length};
   } finally {
     await browser.close();

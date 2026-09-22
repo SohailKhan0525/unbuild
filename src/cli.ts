@@ -15,6 +15,7 @@ Options:
   --browser <path>          Use an installed Chromium/Chrome/Edge executable
   --cdp <url>               Connect to an existing Chromium browser over CDP
   --no-headless              Show Chromium while analyzing
+  --verbose                  Show detailed live progress
   -h, --help                Show help
 
 Android / Termux:
@@ -39,8 +40,16 @@ for(let i=0;i<args.length;i++){
   if(args[i]==="--cdp") cdpEndpoint=args[++i];
 }
 try{
-  console.log("Unbuilding "+url+"…");
-  const result=await unbuild(url,{output,timeout,pages,executablePath,cdpEndpoint,headless:!args.includes("--no-headless")});
+  const verbose = args.includes("--verbose");
+  const result=await unbuild(url,{
+    output,
+    timeout,
+    pages,
+    executablePath,
+    cdpEndpoint,
+    headless:!args.includes("--no-headless"),
+    onProgress: verbose ? (message) => console.log(`[${new Date().toLocaleTimeString()}] ${message}`) : undefined
+  });
   console.log(`✓ Output: ${result.output}`);
   console.log(`✓ Screenshots: ${result.screenshots}`);
 }catch(error){
