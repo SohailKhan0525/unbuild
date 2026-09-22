@@ -1,0 +1,40 @@
+name: npm smoke test
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check published package
+        run: |
+          set -euxo pipefail
+          npm view @agent-qofeno/unbuild version
+          npm pack @agent-qofeno/unbuild --dry-run
+
+      - name: Install published package
+        run: |
+          set -euxo pipefail
+          mkdir -p /tmp/unbuild-smoke
+          cd /tmp/unbuild-smoke
+          npm init -y
+          npm install @agent-qofeno/unbuild@latest
+          npx unbuild --help
+
+      - name: Install Chromium
+        run: |
+          cd /tmp/unbuild-smoke
+          npx playwright install --with-deps chromium
+
+      - name: Run against Linear
+        run: |
+          cd /tmp/unbuild-smoke
+          timeout 180s npx unbuild https://linear.app --output ./linear-unbuild --pages 3 --timeout 30000
+          test -s ./linear-unbuild/AI.md
+          test -s ./linear-unbuild/DESIGN.md
+          test -s ./linear-unbuild/evidence/all-pages.json
+          find ./linear-unbuild/screenshots -type f | head
+          du -sh ./linear-unbuild
