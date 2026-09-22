@@ -10,7 +10,16 @@ unbuild renders a public website in Chromium and **unbuilds what the browser can
 
 The result is a local, structured reference that can be inspected by a developer or handed directly to **OpenCode, Claude Code, Codex, Gemini CLI, Cursor, and other coding agents**.
 
-> **Important:** unbuild does not recover private source code, server-side logic, databases, secrets, or hidden application behavior. It records observable evidence from the rendered interface.
+## Cross-platform support
+
+unbuild is a Node.js CLI with platform-neutral extraction code.
+
+- **Windows, macOS, Linux:** use Playwright's managed Chromium or an installed Chromium/Chrome/Edge binary.
+- **Linux ARM64/ARMv7 and other architectures:** use a compatible installed Chromium binary with `--browser` when Playwright's managed browser is unavailable.
+- **Android / Termux:** Node.js can run in Termux, but Playwright's bundled desktop Chromium is not an Android host browser. Use `--cdp` to connect unbuild to a Chromium-compatible browser exposing the Chrome DevTools Protocol.
+- **Other Unix-like environments:** use `--browser` or `--cdp` when a managed Playwright browser is unavailable.
+
+The npm package itself does not contain OS-specific native binaries. The browser engine is the platform-specific part and must either be installed locally or exposed over CDP.
 
 ## Install
 
@@ -29,23 +38,52 @@ unbuild https://www.example.com
 
 ## Usage
 
-```bash
+```text
 unbuild <url> [options]
 
 Options:
-  -o, --output <dir>   Output directory
-  --timeout <ms>       Browser timeout
-  --no-headless        Show Chromium while analyzing
-  -h, --help           Show help
+  -o, --output <dir>    Output directory (default: ./unbuild-output)
+  --timeout <ms>        Browser timeout
+  --pages <n>           Maximum same-origin pages
+  --browser <path>      Use an installed Chromium/Chrome/Edge executable
+  --cdp <url>           Connect to an existing Chromium browser over CDP
+  --no-headless         Show Chromium while analyzing
+  -h, --help            Show help
 ```
 
-Example:
+Examples:
 
 ```bash
 npx @agent-qofeno/unbuild https://www.turbostarter.dev -o ./unbuild-output
 ```
 
-The default output directory is `./unbuild-output`.
+With an installed browser:
+
+```bash
+unbuild https://www.example.com --browser /path/to/chromium
+```
+
+With a CDP browser:
+
+```bash
+unbuild https://www.example.com --cdp http://127.0.0.1:9222
+```
+
+### Android / Termux
+
+Android is the one platform where the browser engine needs special handling.
+
+A practical Android setup is:
+
+1. Install Node.js and npm in Termux.
+2. Install `@agent-qofeno/unbuild`.
+3. Run or expose a Chromium-compatible browser with a Chrome DevTools Protocol endpoint.
+4. Run:
+```bash
+npx @agent-qofeno/unbuild https://www.example.com --cdp http://127.0.0.1:9222
+```
+
+The CDP endpoint can be local, ADB-forwarded, or provided by a remote browser service. The exact Android browser setup varies by device and ROM; unbuild does not require Android-specific native code.
 
 ## What it produces
 
@@ -167,7 +205,7 @@ Requirements:
 
 - Node.js 22.14+
 - npm
-- Chromium installed by Playwright
+- Chromium installed by Playwright, or an installed Chromium-compatible browser
 
 Install dependencies:
 
@@ -228,12 +266,6 @@ test: cover responsive evidence
 ```
 
 The release workflow publishes through npm Trusted Publishing/OIDC rather than a long-lived npm publish token.
-
-Before the first automated release, configure the package's trusted publisher in npm to match:
-
-- GitHub owner: `SohailKhan0525`
-- Repository: `unbuild`
-- Workflow filename: `publish.yml`
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for release and contribution rules.
 
