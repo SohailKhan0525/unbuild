@@ -66,7 +66,7 @@ export function renderReport(d:PageEvidence,ai=false):string{
   lines.push("","## CSS variables");for(const x of d.cssVariables.slice(0,160))lines.push("- "+x.name+" = "+x.value);if(!d.cssVariables.length)lines.push("- None captured.");
   lines.push("","## Responsive rules observed","- Media queries: "+(d.styleRules.mediaQueries.join(" | ")||"none captured"),"- Keyframes: "+(d.styleRules.keyframes.join(" | ")||"none captured"),"- External stylesheets: "+d.styleRules.externalStylesheets.length);
   lines.push("","## Interaction states");for(const x of d.interactionStates)lines.push("- "+x.state+" — "+x.text+" — "+x.selector+" — changed: "+x.changed);if(!d.interactionStates.length)lines.push("- No state delta was observed on sampled interactive elements.");
-  lines.push("","## Motion");for(const x of d.motion.slice(0,100))lines.push("- "+x.selector+" — "+x.property+" — "+x.duration+" — "+x.timing+" — "+x.animation);
+  lines.push("","## Motion");for(const x of d.motion.slice(0,160))lines.push("- "+x.selector+" — "+x.property+" — "+x.duration+" — "+x.timing+" — "+x.animation+(x.source?" — "+x.source:"")+(x.delay?" — delay "+x.delay:"")+(x.iterations?" — iterations "+x.iterations:""));if(!d.motion.length)lines.push("- No transition, CSS animation, or Web Animations API activity was observed at capture time.");
   lines.push("","## Accessibility","", "The accessibility tree is stored separately so an agent can reconstruct semantic structure without guessing from pixels.","");
   return lines.join("\n");
 }
@@ -91,19 +91,27 @@ export function renderAggregateReport(pages:PageEvidence[],source:string,ai=fals
   }
   const lines:string[]=[];
   lines.push("# Unbuild — "+(ai?"AI Reconstruction Brief":"Design System & UX Specification"),"","Source: "+source,"Pages analyzed: "+pages.length,"Visible measured elements: "+elements,"Images observed: "+images,"Asset URLs observed: "+assets.size,"");
-  if(ai)lines.push("## Agent build order","","1. Open screenshots/desktop first and compare the tablet/mobile screenshots for structural changes.",
-    "2. Read DESIGN.md for the measured visual system.",
-    "3. Read pages/*.html to inspect the rendered DOM structure.",
-    "4. Read pages/*.json for element geometry, computed styles, components, tokens and asset references.",
-    "5. Read accessibility/*.yml for the AI-readable semantic tree and interaction hierarchy.",
-    "6. Read responsive/*.json for viewport-specific layout/style changes.",
-    "7. Reuse assets/* directly; assets/manifest.json maps each local file to its source URL and page.",
-    "8. Read ux/interaction-states.json for observed hover/focus deltas and ux/summary.json for forms, controls and landmarks.",
-    "9. Read motion/summary.json for transition/animation evidence.",
-    "10. Implement from observed evidence. When evidence is absent, label the implementation as inferred rather than fabricating a source fact.","");
+  if(ai)lines.push("## Agent build order","","1. Open screenshots/desktop first and compare tablet/mobile screenshots for structural changes.",
+    "2. Read DESIGN.md for the measured visual system and use it as the visual contract.",
+    "3. Read pages/*.html to inspect the rendered DOM, text, links and source structure.",
+    "4. Read pages/*.json for measured geometry, computed styles, components, tokens, images and asset hints.",
+    "5. Read accessibility/*.yml to preserve landmarks, roles and accessible names.",
+    "6. Read responsive/*.json to reproduce viewport-specific layout changes instead of guessing breakpoints.",
+    "7. Open assets/manifest.json, then reuse the captured local files from assets/ rather than hotlinking the source site.",
+    "8. Read ux/interaction-states.json and reproduce only state changes that were actually observed.",
+    "9. Read motion/summary.json; Web Animations API records include runtime timing/keyframe evidence when available.",
+    "10. Validate the rebuilt page at 1440×1000, 1024×1000 and 390×844 against the supplied screenshots.",
+    "11. Treat missing evidence as unknown/inferred. Do not invent hidden implementation details.","");
   else lines.push("## Overview","","This report is a measured reconstruction reference. It separates visual design facts from implementation guidance so an agent can build a new frontend while preserving the observed UI/UX.","");
 
-  lines.push("## Page index","");for(const p of pages)lines.push(...pageSummary(p));
+  lines.push("## Page index","");
+  for(const p of pages){
+    lines.push(...pageSummary(p));
+    if(ai){
+      lines.push("- Reconstruction focus: preserve the measured document dimensions, landmark hierarchy, typography, asset choices, responsive geometry and observed interaction/motion states.");
+      lines.push("- Evidence files: pages/"+p.url.replace(/[^a-zA-Z0-9._-]+/g,"-").slice(0,100)+".json is generated per route; use the actual filenames in the pages/ directory.");
+    }
+  }
   lines.push("## Component inventory","","| Tag | Role | Count | Example |","|---|---|---:|---|",...componentRows(pages));
   tokenSection(lines,"Colors",color,30);
   tokenSection(lines,"Typography",font,22);
