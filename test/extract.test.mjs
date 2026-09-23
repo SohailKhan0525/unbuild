@@ -1,13 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { createServer } from "node:http";
 import { chromium } from "playwright";
 import { extractPage } from "../dist/extract.js";
 
 test("extractPage captures frontend reconstruction evidence", async () => {
   const browser = await chromium.launch({ headless: true });
-  try {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
-    await page.setContent(`<!doctype html>
+  const server = createServer((_req, res) => { res.writeHead(200, { "content-type": "text/html" }); res.end(`<!doctype html>
       <html lang="en">
         <head>
           <meta name="description" content="Fixture">
@@ -35,7 +34,13 @@ test("extractPage captures frontend reconstruction evidence", async () => {
           </main>
           <footer>Footer</footer>
         </body>
-      </html>`, { waitUntil: "load" });
+      </html>`); });
+  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+  const address = server.address();
+  const port = typeof address === "object" && address ? address.port : 0;
+  try {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    await page.goto(`http://127.0.0.1:${port}`, { waitUntil: "load" });
 
     const evidence = await extractPage(page, "https://example.com/", { interactions: true });
 
@@ -55,5 +60,6 @@ test("extractPage captures frontend reconstruction evidence", async () => {
     assert.ok(evidence.interactionStates.some((s) => s.state === "focus" && s.changed));
   } finally {
     await browser.close();
+    await new Promise((resolve) => server.close(resolve));
   }
 });
