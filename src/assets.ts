@@ -148,5 +148,58 @@ export class AssetCollector{
     for(const asset of assets){if(!asset.source||asset.source.startsWith("data:"))continue;const record=this.records.get(asset.source);if(record){if(!record.pages.includes(url))record.pages.push(url);if(asset.alt&&!record.alt)record.alt=asset.alt;if(asset.width&&!record.width)record.width=asset.width;if(asset.height&&!record.height)record.height=asset.height}}
   }
   async flush(){while(this.pending.size)await Promise.all([...this.pending])}
+  async writeStylesheetInventory(){
+    const inventory:{version:number;stylesheets:Array<{
+      source:string;localPath:string;bytes:number;selectors:string[];mediaQueries:string[];
+      keyframes:string[];customProperties:Array<{name:string;value:string;selector:string|null}>;
+      fontFaces:Array<Record<string,string>>;referencedAssets:string[];
+    }>}={version:1,stylesheets:[]};
+    for(const sheet of [...this.records.values()].filter(x=>x.type==="stylesheet"&&x.captured&&x.localPath)){
+      try{
+        const css=await readFile(join(this.output,sheet.localPath!),"utf8");
+        const root=postcss.parse(css,{from:"<captured-css>"});
+        const selectors:string[]=[];const mediaQueries:string[]=[];const keyframes:string[]=[];
+        const customProperties:Array<{name:string;value:string;selector:string|null}>=[];
+        const fontFaces:Array<Record<string,string>>=[];const referencedAssets:string[]=[];
+        root.walkRules(rule=>{
+          selectors.push(rule.selector);
+          rule.walkDecls(decl=>{
+            if(decl.prop.startsWith("--"))customProperties.push({name:decl.prop,value:decl.value,selector:rule.selector});
+            for(const raw of extractCssUrls(decl.value)){
+              try{referencedAssets.push(new URL(raw,sheet.source).href)}catch{}
+            }
+          });
+        });
+        root.walkAtRules(rule=>{
+          const name=rule.name.toLowerCase();
+          if(name==="media"||name==="supports"||name==="container")mediaQueries.push("@"+rule.name+" "+rule.params);
+          if(name==="keyframes"||name.endsWith("keyframes"))keyframes.push(rule.params);
+          if(name==="font-face"){
+            const face:Record<string,string>={};
+            rule.walkDecls(decl=>{face[decl.prop]=decl.value});
+            fontFaces.push(face);
+          }
+          for(const raw of extractCssUrls(rule.params)){
+            try{referencedAssets.push(new URL(raw,sheet.source).href)}catch{}
+          }
+        });
+        inventory.stylesheets.push({
+          source:sheet.source,localPath:sheet.localPath!,bytes:sheet.bytes,
+          selectors:[...new Set(selectors)].slice(0,5000),
+          mediaQueries:[...new Set(mediaQueries)],
+          keyframes:[...new Set(keyframes)],
+          customProperties,
+          fontFaces,
+          referencedAssets:[...new Set(referencedAssets)]
+        });
+      }catch(error){
+        this.progress?.("Could not inventory stylesheet "+sheet.source+": "+(error instanceof Error?error.message:String(error)));
+      }
+    }
+    await mkdir(join(this.output,"styles"),{recursive:true});
+    await writeFile(join(this.output,"styles","inventory.json"),JSON.stringify(inventory,null,2));
+    return inventory;
+  }
+
   async writeManifest(){await this.flush();const records=[...this.records.values()].sort((a,b)=>a.type.localeCompare(b.type)||a.source.localeCompare(b.source));await mkdir(join(this.output,"assets"),{recursive:true});await writeFile(join(this.output,"assets","manifest.json"),JSON.stringify({version:2,capturedAt:new Date().toISOString(),totalAssets:records.length,capturedAssets:records.filter(x=>x.captured).length,totalBytes:records.reduce((s,x)=>s+x.bytes,0),assets:records},null,2));return records}
 }
