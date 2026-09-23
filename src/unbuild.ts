@@ -179,7 +179,7 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
   if(options.cdpEndpoint&&options.executablePath)throw new Error("Choose either --cdp or --browser, not both.");
 
   progress(options,`Preparing output directory: ${output}`);await mkdir(output,{recursive:true});
-  for(const dir of ["screenshots","pages","evidence","tokens","components","ux","motion","responsive","accessibility","assets"])await mkdir(join(output,dir),{recursive:true});
+  for(const dir of ["screenshots","pages","evidence","tokens","components","ux","motion","responsive","accessibility","assets","styles"])await mkdir(join(output,dir),{recursive:true});
 
   const connected=Boolean(options.cdpEndpoint);
   const browser=await withHeartbeat(options,connected?`Connecting to Chromium over CDP: ${options.cdpEndpoint}`:"Launching Playwright Chromium…",launchBrowser(options));
