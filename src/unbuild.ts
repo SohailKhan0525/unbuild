@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { assertPublicUrl, discoverUrls } from "./discover.js";
 import { extractPage, type PageEvidence } from "./extract.js";
 import { renderAggregateReport } from "./report.js";
+import { AssetCollector } from "./assets.js";
 
 export interface UnbuildOptions {
   output?: string;
@@ -105,6 +106,8 @@ export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promis
   try {
     const context = await getContext(browser, connected);
     const page:Page = context.pages()[0] ?? await context.newPage();
+    const assets = new AssetCollector(output, options.onProgress);
+    assets.attach(page);
     page.setDefaultTimeout(timeout);
 
     await page.route("**/*", async (route) => {
@@ -140,6 +143,9 @@ export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promis
       await page.waitForTimeout(300);
       progress(options, `Extracting design evidence from page ${pageIndex + 1}/${urls.length}`);
       const data=await extractPage(page,url);
+      progress(options, `Collecting source assets for ${url}`);
+      for (const hint of data.assetHints) await assets.captureUrl(page, hint.source, url, hint.kind, hint.alt);
+      assets.addPage(url, data.assetHints);
       evidence.push(data);
       await writeFile(join(output,"pages",name+".json"),JSON.stringify(data,null,2));
 
@@ -164,23 +170,31 @@ export async function unbuild(inputUrl:string, options:UnbuildOptions={}):Promis
         await page.screenshot({path:join(shotDir,name+".png"),fullPage:true});
         progress(options, `Extracting responsive evidence for ${viewport.name}`);
         const responsive=await extractPage(page,url);
+        assets.addPage(url, responsive.assetHints);
         await writeFile(join(output,"responsive",viewport.name+"-"+name+".json"),JSON.stringify({
           viewport,
           document:responsive.document,
           layout:responsive.layout,
           tokens:responsive.tokens,
-          components:responsive.components
+          components:responsive.components,
+          assetHints:responsive.assetHints,
+          headings:responsive.headings,
+          cssVariables:responsive.cssVariables
         },null,2));
       }
     }
 
-    progress(options, "Writing aggregate evidence and AI-readable reports…");
+    await assets.flush();
+    const assetManifest = await assets.writeManifest();
+    progress(options, `Writing reports and asset manifest (${assetManifest.filter(x => x.captured).length} captured assets)…`);
     if (evidence.length) {
       await writeFile(join(output,"evidence","all-pages.json"),JSON.stringify(evidence,null,2));
       await writeFile(join(output,"tokens","tokens.json"),JSON.stringify(evidence.map(x=>x.tokens),null,2));
       await writeFile(join(output,"components","components.json"),JSON.stringify(evidence.map(x=>({url:x.url,components:x.components})),null,2));
       await writeFile(join(output,"DESIGN.md"),renderAggregateReport(evidence, root.toString()));
       await writeFile(join(output,"AI.md"),renderAggregateReport(evidence, root.toString(), true));
+      await writeFile(join(output,"ux","summary.json"),JSON.stringify(evidence.map(x=>({url:x.url,headings:x.headings,controls:x.controls,forms:x.forms,navigation:x.navigation})),null,2));
+      await writeFile(join(output,"motion","summary.json"),JSON.stringify(evidence.map(x=>({url:x.url,motion:x.motion})),null,2));
     }
 
     await writeFile(join(output,"README.md"),[

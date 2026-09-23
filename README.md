@@ -114,8 +114,15 @@ unbuild-output/
 ├── components/
 │   └── components.json
 ├── assets/
+│   ├── manifest.json
+│   ├── images/
+│   ├── icons/
+│   ├── fonts/
+│   └── styles/
 ├── motion/
+│   └── summary.json
 └── ux/
+    └── summary.json
 ```
 
 The exact files may grow as extraction capabilities expand.
@@ -154,6 +161,9 @@ Do not treat a frequency count as proof of a design token. Repeated values are e
 - classes and representative text samples
 - document language metadata
 - image URLs, dimensions, and alt text
+- browser-delivered image, icon, font, stylesheet, media, and manifest assets saved locally under `assets/`
+- asset manifest mapping every captured resource to its source URL and page usage
+- heading hierarchy, component geometry, navigation structure, forms, focus evidence, and CSS custom properties
 
 ### Responsive behavior
 
@@ -167,7 +177,11 @@ These are observation points, not claims about the site's original breakpoint va
 
 ### Motion
 
-unbuild records observable CSS transition and animation metadata exposed by computed styles. It does not claim to recover every JavaScript-driven interaction or animation.
+unbuild records observable CSS transition and animation metadata exposed by computed styles.
+
+### Assets
+
+The browser network is observed while pages render. Image, icon, font, stylesheet, media, and manifest responses are captured into `assets/` when they are available and within the safety/size budget. `assets/manifest.json` records the original URL, local path, content type, size, status, and pages where the resource was observed. It does not claim to recover every JavaScript-driven interaction or animation.
 
 ## What unbuild does not do
 
