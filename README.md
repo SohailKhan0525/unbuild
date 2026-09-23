@@ -21,22 +21,52 @@ unbuild is a Node.js CLI with platform-neutral extraction code.
 
 The npm package installs the Playwright Chromium browser during package installation on supported desktop platforms. If browser installation is intentionally skipped or unavailable, use `--browser` with an installed Chromium/Chrome/Edge binary or `--cdp` with an existing Chromium browser. On Android / Termux, unbuild automatically uses the native Termux Chromium executable when present and applies the Android-compatible Playwright host workaround. The CLI keeps browser initialization lazy so `unbuild --help` works on Android.
 
-## Install
+## Install and run
 
-Run it without installing globally:
+### Recommended: run directly with npx
+
+You do **not** need to install the CLI globally:
 
 ```bash
 npx @agent-qofeno/unbuild https://www.example.com
 ```
 
-The package installs the matching Playwright Chromium browser as part of `npm install`, so the normal `npx` and global-install flows do not require a separate `npx playwright install` step.
+This is the recommended way to try or run unbuild.
 
-Or install it:
+### Install globally: use the `unbuild` command directly
+
+If you want `unbuild` available as a normal terminal command on Windows, macOS, or Linux, install it globally:
 
 ```bash
 npm install -g @agent-qofeno/unbuild
 unbuild https://www.example.com
 ```
+
+### Important: local `npm install` does not add `unbuild` to your terminal PATH
+
+This:
+
+```bash
+npm install @agent-qofeno/unbuild
+``
+
+installs the package **locally in the current project**. It does not make the `unbuild` executable globally available, so typing `unbuild --help` directly in a Windows Command Prompt will not work from that installation.
+
+After a local install, use either:
+
+```bash
+npx unbuild --help
+``
+
+or the local executable explicitly:
+
+```bash
+.\\node_modules\\.bin\\unbuild.cmd --help
+```
+
+If you want to type `unbuild --help` directly, use the global installation command above.
+
+The package installs the matching Playwright Chromium browser as part of npm installation on supported desktop platforms, so normal `npx` and global-install flows do not require a separate `npx playwright install` step.
 
 ## Usage
 
