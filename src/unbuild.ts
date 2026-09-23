@@ -3,7 +3,7 @@ import { access, mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { assertPublicUrl, discoverUrls } from "./discover.js";
 import { extractPage, type PageEvidence } from "./extract.js";
-import { renderAggregateReport } from "./report.js";
+import { aggregateTokenEvidence, renderAggregateReport } from "./report.js";
 import { AssetCollector } from "./assets.js";
 import { captureAccessibilityAudit, captureInteractionScreenshots } from "./quality.js";
 
@@ -264,7 +264,7 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
     progress(options,`Writing reports and asset manifest (${assetManifest.filter(x=>x.captured).length} captured assets)…`);
     if(evidence.length){
       await writeFile(join(output,"evidence","all-pages.json"),JSON.stringify(evidence,null,2));
-      await writeFile(join(output,"tokens","tokens.json"),JSON.stringify(evidence.map(x=>x.tokens),null,2));
+      await writeFile(join(output,"tokens","tokens.json"),JSON.stringify(aggregateTokenEvidence(evidence),null,2));
       await writeFile(join(output,"components","components.json"),JSON.stringify(evidence.map(x=>({url:x.url,components:x.components,landmarks:x.landmarks,buttons:x.buttons})),null,2));
       await writeFile(join(output,"DESIGN.md"),renderAggregateReport(evidence,root.toString()));
       await writeFile(join(output,"AI.md"),renderAggregateReport(evidence,root.toString(),true));
