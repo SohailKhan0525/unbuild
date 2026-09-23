@@ -135,7 +135,7 @@ export class AssetCollector{
           const before=this.records.get(source);
           await this.captureUrl(page,source,pageUrl,type);
           const after=this.records.get(source);
-          if(!before&&after)discovered++;
+          if(after?.captured&&!before?.captured)discovered++;
         }
       }catch(error){
         this.progress?.("Could not parse captured stylesheet "+sheet.source+": "+(error instanceof Error?error.message:String(error)));
