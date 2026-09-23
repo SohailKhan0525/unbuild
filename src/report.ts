@@ -28,7 +28,14 @@ function componentRows(pages:PageEvidence[]){
 }
 
 function tokenSection(lines:string[],title:string,map:Record<string,number>,limit:number,prefix=""){
-  lines.push("","## "+title,"");for(const [k,v] of top(map,limit))lines.push("- "+prefix+k+" — observed "+v+"×");
+  const filters:Record<string,(value:string)=>boolean>={
+    "Colors":value=>!/^rgba?\(0, 0, 0, 0\)$/.test(value)&&value!=="transparent",
+    "Spacing":value=>!["0px","normal","auto"].includes(value),
+    "Radii":value=>value!=="0px",
+    "Shadows":value=>value!=="none"
+  };
+  lines.push("","## "+title,"");
+  for(const [k,v] of top(map,limit,filters[title]??(()=>true)))lines.push("- "+prefix+k+" — observed "+v+"×");
 }
 
 export function aggregateTokenEvidence(pages:PageEvidence[]){
@@ -43,7 +50,7 @@ export function aggregateTokenEvidence(pages:PageEvidence[]){
     cssVariables:{} as Record<string,string>
   };
   for(const page of pages){
-    for(const [k,v] of Object.entries(page.tokens.colors))if(k!=="transparent"&&!/^rgba?\\(0, 0, 0, 0\\)$/.test(k))result.colors[k]=(result.colors[k]??0)+v;
+    for(const [k,v] of Object.entries(page.tokens.colors))if(k!=="transparent"&&!/^rgba?\(0, 0, 0, 0\)$/.test(k))result.colors[k]=(result.colors[k]??0)+v;
     for(const [k,v] of Object.entries(page.tokens.fonts))result.fonts[k]=(result.fonts[k]??0)+v;
     for(const [k,v] of Object.entries(page.tokens.fontSizes))result.fontSizes[k]=(result.fontSizes[k]??0)+v;
     for(const [k,v] of Object.entries(page.tokens.radii))if(k!=="0px")result.radii[k]=(result.radii[k]??0)+v;
