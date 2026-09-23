@@ -77,7 +77,7 @@ export class AssetCollector{
     }
   }
   private async persist(record:AssetRecord,body:Buffer){
-    const ext=extensionFor(record.contentType??"",record.source);const relative=join("assets",folderFor(record.type),record.id+"-"+safeBase(record.source)+ext);
+    const ext=extensionFor(record.contentType??"",record.source);const base=safeBase(record.source);const suffix=ext&&base.toLowerCase().endsWith(ext.toLowerCase())?"":ext;const relative=join("assets",folderFor(record.type),record.id+"-"+base+suffix);
     await mkdir(join(this.output,"assets",folderFor(record.type)),{recursive:true});await writeFile(join(this.output,relative),body);
     record.localPath=relative.replace(/\\/g,"/");record.bytes=body.length;record.captured=true;this.totalBytes+=body.length;
     this.progress?.("Captured asset "+record.localPath+" ("+body.length+" bytes)");
