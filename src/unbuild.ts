@@ -252,6 +252,7 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
         await writeFile(join(output,"responsive",viewport.name+"-"+name+".json"),JSON.stringify(responsive,null,2));
         const axe=await captureAccessibilityAudit(page,output,viewport.name,name,options.onProgress);
         if(axe){
+          accessibilitySummaries.push({url,viewport:viewport.name,...axe});
           await writeFile(
             join(output,"accessibility",viewport.name+"-"+name+"-summary.json"),
             JSON.stringify(axe,null,2)
@@ -263,6 +264,7 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
 
     await assets.flush();
     await writeFile(join(output,"accessibility","summary.json"),JSON.stringify({version:1,scans:accessibilitySummaries},null,2));
+    await assets.writeStylesheetInventory();
     const assetManifest=await assets.writeManifest();
     progress(options,`Writing reports and asset manifest (${assetManifest.filter(x=>x.captured).length} captured assets)…`);
     if(evidence.length){
