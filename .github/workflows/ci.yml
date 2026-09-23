@@ -23,3 +23,31 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run check
       - run: npm test
+
+
+  live-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - name: Unbuild Motion live site
+        run: |
+          set -euxo pipefail
+          rm -rf ./motion-smoke
+          node dist/cli.js http://motion.dev/ --output ./motion-smoke --pages 1 --timeout 45000
+          test -s ./motion-smoke/AI.md
+          test -s ./motion-smoke/DESIGN.md
+          test -s ./motion-smoke/evidence/all-pages.json
+          test -s ./motion-smoke/assets/manifest.json
+          test -s ./motion-smoke/motion/summary.json
+          test -s ./motion-smoke/ux/interaction-states.json
+          test -s ./motion-smoke/accessibility/desktop-home.yml
+          test -s ./motion-smoke/responsive/desktop-home.json
+          test -s ./motion-smoke/screenshots/desktop/home.png
+          find ./motion-smoke/assets -type f | head -20
