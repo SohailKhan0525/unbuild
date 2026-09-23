@@ -19,8 +19,9 @@ Options:
   -h, --help                Show help
 
 Android / Termux:
-  Playwright's bundled desktop browser is not an Android browser.
-  Use --cdp with an existing Chromium-compatible browser endpoint.
+  Uses installed Termux Chromium automatically when available.
+  Install it with: pkg install x11-repo && pkg install chromium
+  Or use --cdp with an existing Chromium-compatible browser endpoint.
 `);
 }
 
