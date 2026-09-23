@@ -1,0 +1,391 @@
+[
+  {
+    "url": "https://loopproof.me/",
+    "components": [
+      {
+        "tag": "a",
+        "role": null,
+        "count": 19,
+        "samples": [
+          {
+            "text": "Skip to content",
+            "classes": [
+              "skip-link"
+            ],
+            "rect": {
+              "width": 145.67,
+              "height": 40
+            }
+          },
+          {
+            "text": "INTERNET COURT\nPUBLIC CASE DOCKET",
+            "classes": [
+              "wordmark"
+            ],
+            "rect": {
+              "width": 174.86,
+              "height": 39
+            }
+          },
+          {
+            "text": "Pricing",
+            "classes": [
+              "header-link"
+            ],
+            "rect": {
+              "width": 70.75,
+              "height": 33
+            }
+          },
+          {
+            "text": "Contact",
+            "classes": [
+              "header-link"
+            ],
+            "rect": {
+              "width": 76.78,
+              "height": 33
+            }
+          },
+          {
+            "text": "Sign in",
+            "classes": [
+              "header-link"
+            ],
+            "rect": {
+              "width": 69.36,
+              "height": 33
+            }
+          },
+          {
+            "text": "File a case",
+            "classes": [
+              "btn"
+            ],
+            "rect": {
+              "width": 118.33,
+              "height": 44
+            }
+          },
+          {
+            "text": "Pricing",
+            "classes": [
+              "header-link"
+            ],
+            "rect": {
+              "width": 0,
+              "height": 0
+            }
+          },
+          {
+            "text": "Contact",
+            "classes": [
+              "header-link"
+            ],
+            "rect": {
+              "width": 0,
+              "height": 0
+            }
+          }
+        ]
+      },
+      {
+        "tag": "nav",
+        "role": null,
+        "count": 2,
+        "samples": [
+          {
+            "text": "Pricing\nContact\nSign in\nFile a case",
+            "classes": [
+              "header-links",
+              "header-links-desktop"
+            ],
+            "rect": {
+              "width": 359.22,
+              "height": 44
+            }
+          },
+          {
+            "text": "PricingContactSign inFile a case",
+            "classes": [
+              "header-menu-panel"
+            ],
+            "rect": {
+              "width": 0,
+              "height": 0
+            }
+          }
+        ]
+      },
+      {
+        "tag": "header",
+        "role": null,
+        "count": 1,
+        "samples": [
+          {
+            "text": "INTERNET COURT\nPUBLIC CASE DOCKET\nPricing\nContact\nSign in\nFile a case",
+            "classes": [
+              "docket-header"
+            ],
+            "rect": {
+              "width": 1440,
+              "height": 85
+            }
+          }
+        ]
+      },
+      {
+        "tag": "footer",
+        "role": null,
+        "count": 1,
+        "samples": [
+          {
+            "text": "Internet Court\nMembership\nContact\nPrivacy\nTerms\nX",
+            "classes": [
+              "docket-footer"
+            ],
+            "rect": {
+              "width": 1440,
+              "height": 81
+            }
+          }
+        ]
+      },
+      {
+        "tag": "details",
+        "role": null,
+        "count": 1,
+        "samples": [
+          {
+            "text": "PricingContactSign inFile a case",
+            "classes": [
+              "header-menu"
+            ],
+            "rect": {
+              "width": 0,
+              "height": 0
+            }
+          }
+        ]
+      },
+      {
+        "tag": "summary",
+        "role": null,
+        "count": 1,
+        "samples": [
+          {
+            "text": "Menu",
+            "classes": [
+              "header-menu-toggle"
+            ],
+            "rect": {
+              "width": 0,
+              "height": 0
+            }
+          }
+        ]
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "count": 5,
+        "samples": [
+          {
+            "text": "Filed in the court of public opinion\n\nSomeone is wrong.\nProbably you.\n\nPut your argument on trial. Let strangers vote. Get a verdict worth sending to the group ",
+            "classes": [
+              "shell",
+              "hero-grid"
+            ],
+            "rect": {
+              "width": 1040,
+              "height": 574.52
+            }
+          },
+          {
+            "text": "How it works\n\nThree steps to a verdict.\n\nStep 1\n\nFile the case\n\nWrite the argument the way you'd actually explain it to someone. No character-limit gimmicks.\n\nS",
+            "classes": [
+              "shell",
+              "section"
+            ],
+            "rect": {
+              "width": 1040,
+              "height": 432.3
+            }
+          },
+          {
+            "text": "The alternative\n\nYou have other ways to settle this.\n\nHere's how they stack up.\n\n\tInternet Court\tGroup chat\tReddit thread\tActual court\nEnds with a real verdict\t",
+            "classes": [
+              "shell",
+              "section"
+            ],
+            "rect": {
+              "width": 1040,
+              "height": 619.8
+            }
+          },
+          {
+            "text": "Questions\n\nWhat people ask before filing.\nCan anyone read a public case?\n\nYes. Public cases are designed to be opened and shared by anyone. You only need to sig",
+            "classes": [
+              "shell",
+              "section"
+            ],
+            "rect": {
+              "width": 1040,
+              "height": 885.3
+            }
+          },
+          {
+            "text": "Membership\n\nKeep the jury free. Pay for more control.\n\nFree users can file public cases and vote. Membership adds private and unlisted cases.\n\nSee membership",
+            "classes": [
+              "shell",
+              "section",
+              "cta-row"
+            ],
+            "rect": {
+              "width": 1040,
+              "height": 288.8
+            }
+          }
+        ]
+      },
+      {
+        "tag": "main",
+        "role": null,
+        "count": 1,
+        "samples": [
+          {
+            "text": "Filed in the court of public opinion\n\nSomeone is wrong.\nProbably you.\n\nPut your argument on trial. Let strangers vote. Get a verdict worth sending to the group ",
+            "classes": [],
+            "rect": {
+              "width": 1440,
+              "height": 2804.7
+            }
+          }
+        ]
+      }
+    ],
+    "landmarks": [
+      {
+        "tag": "header",
+        "role": null,
+        "name": null,
+        "selector": "body > div:nth-of-type(2) > header",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 85
+        }
+      },
+      {
+        "tag": "nav",
+        "role": null,
+        "name": "Primary",
+        "selector": "body > div:nth-of-type(2) > header > div > nav",
+        "rect": {
+          "x": 856.78,
+          "y": 20,
+          "width": 359.22,
+          "height": 44
+        }
+      },
+      {
+        "tag": "main",
+        "role": null,
+        "name": null,
+        "selector": "#main",
+        "rect": {
+          "x": 0,
+          "y": 85,
+          "width": 1440,
+          "height": 2804.7
+        }
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "name": null,
+        "selector": "#main > section:nth-of-type(1)",
+        "rect": {
+          "x": 200,
+          "y": 85,
+          "width": 1040,
+          "height": 574.52
+        }
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "name": null,
+        "selector": "#how",
+        "rect": {
+          "x": 200,
+          "y": 660.52,
+          "width": 1040,
+          "height": 432.3
+        }
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "name": null,
+        "selector": "#main > section:nth-of-type(3)",
+        "rect": {
+          "x": 200,
+          "y": 1093.81,
+          "width": 1040,
+          "height": 619.8
+        }
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "name": null,
+        "selector": "#main > section:nth-of-type(4)",
+        "rect": {
+          "x": 200,
+          "y": 1714.61,
+          "width": 1040,
+          "height": 885.3
+        }
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "name": null,
+        "selector": "#main > section:nth-of-type(5)",
+        "rect": {
+          "x": 200,
+          "y": 2600.91,
+          "width": 1040,
+          "height": 288.8
+        }
+      },
+      {
+        "tag": "footer",
+        "role": null,
+        "name": null,
+        "selector": "body > div:nth-of-type(2) > footer",
+        "rect": {
+          "x": 0,
+          "y": 2969.7,
+          "width": 1440,
+          "height": 81
+        }
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "name": "Notifications",
+        "selector": "body > div:nth-of-type(3)",
+        "rect": {
+          "x": 1392,
+          "y": 952,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "buttons": []
+  }
+]

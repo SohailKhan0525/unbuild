@@ -1,0 +1,907 @@
+[
+  {
+    "url": "https://loopproof.me/",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "headings": [
+      {
+        "level": 1,
+        "text": "Someone is wrong.Probably you.",
+        "selector": "#main > section:nth-of-type(1) > div:nth-of-type(1) > h1",
+        "width": 519.19,
+        "height": 199.64
+      },
+      {
+        "level": 3,
+        "text": "\"I ate the last slice. My roommate says I owe them.\"",
+        "selector": "#main > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > h3",
+        "width": 374.81,
+        "height": 52.78
+      },
+      {
+        "level": 2,
+        "text": "Three steps to a verdict.",
+        "selector": "#how > h2",
+        "width": 992,
+        "height": 41.8
+      },
+      {
+        "level": 3,
+        "text": "File the case",
+        "selector": "#how > div > div:nth-of-type(1) > h3",
+        "width": 309.33,
+        "height": 24
+      },
+      {
+        "level": 3,
+        "text": "Strangers vote",
+        "selector": "#how > div > div:nth-of-type(2) > h3",
+        "width": 309.33,
+        "height": 24
+      },
+      {
+        "level": 3,
+        "text": "Get the verdict",
+        "selector": "#how > div > div:nth-of-type(3) > h3",
+        "width": 309.34,
+        "height": 24
+      },
+      {
+        "level": 2,
+        "text": "You have other ways to settle this.",
+        "selector": "#main > section:nth-of-type(3) > h2",
+        "width": 992,
+        "height": 41.8
+      },
+      {
+        "level": 2,
+        "text": "What people ask before filing.",
+        "selector": "#main > section:nth-of-type(4) > h2",
+        "width": 992,
+        "height": 41.8
+      },
+      {
+        "level": 3,
+        "text": "Can anyone read a public case?",
+        "selector": "#main > section:nth-of-type(4) > div > div:nth-of-type(1) > h3",
+        "width": 720,
+        "height": 21
+      },
+      {
+        "level": 3,
+        "text": "How is the verdict decided?",
+        "selector": "#main > section:nth-of-type(4) > div > div:nth-of-type(2) > h3",
+        "width": 720,
+        "height": 21
+      },
+      {
+        "level": 3,
+        "text": "Do I need a password?",
+        "selector": "#main > section:nth-of-type(4) > div > div:nth-of-type(3) > h3",
+        "width": 720,
+        "height": 21
+      },
+      {
+        "level": 3,
+        "text": "Can I report a case?",
+        "selector": "#main > section:nth-of-type(4) > div > div:nth-of-type(4) > h3",
+        "width": 720,
+        "height": 21
+      },
+      {
+        "level": 3,
+        "text": "Is filing a case free?",
+        "selector": "#main > section:nth-of-type(4) > div > div:nth-of-type(5) > h3",
+        "width": 720,
+        "height": 21
+      },
+      {
+        "level": 3,
+        "text": "Does Internet Court use fake votes?",
+        "selector": "#main > section:nth-of-type(4) > div > div:nth-of-type(6) > h3",
+        "width": 720,
+        "height": 21
+      },
+      {
+        "level": 2,
+        "text": "Keep the jury free. Pay for more control.",
+        "selector": "#main > section:nth-of-type(5) > div > h2",
+        "width": 722.75,
+        "height": 41.8
+      }
+    ],
+    "controls": [],
+    "buttons": [],
+    "forms": [],
+    "navigation": [
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav",
+        "items": [
+          "Pricing",
+          "Contact",
+          "Sign in",
+          "File a case"
+        ]
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > details > nav",
+        "items": [
+          "Pricing",
+          "Contact",
+          "Sign in",
+          "File a case"
+        ]
+      }
+    ],
+    "landmarks": [
+      {
+        "tag": "header",
+        "role": null,
+        "name": null,
+        "selector": "body > div:nth-of-type(2) > header",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 85
+        }
+      },
+      {
+        "tag": "nav",
+        "role": null,
+        "name": "Primary",
+        "selector": "body > div:nth-of-type(2) > header > div > nav",
+        "rect": {
+          "x": 856.78,
+          "y": 20,
+          "width": 359.22,
+          "height": 44
+        }
+      },
+      {
+        "tag": "main",
+        "role": null,
+        "name": null,
+        "selector": "#main",
+        "rect": {
+          "x": 0,
+          "y": 85,
+          "width": 1440,
+          "height": 2804.7
+        }
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "name": null,
+        "selector": "#main > section:nth-of-type(1)",
+        "rect": {
+          "x": 200,
+          "y": 85,
+          "width": 1040,
+          "height": 574.52
+        }
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "name": null,
+        "selector": "#how",
+        "rect": {
+          "x": 200,
+          "y": 660.52,
+          "width": 1040,
+          "height": 432.3
+        }
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "name": null,
+        "selector": "#main > section:nth-of-type(3)",
+        "rect": {
+          "x": 200,
+          "y": 1093.81,
+          "width": 1040,
+          "height": 619.8
+        }
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "name": null,
+        "selector": "#main > section:nth-of-type(4)",
+        "rect": {
+          "x": 200,
+          "y": 1714.61,
+          "width": 1040,
+          "height": 885.3
+        }
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "name": null,
+        "selector": "#main > section:nth-of-type(5)",
+        "rect": {
+          "x": 200,
+          "y": 2600.91,
+          "width": 1040,
+          "height": 288.8
+        }
+      },
+      {
+        "tag": "footer",
+        "role": null,
+        "name": null,
+        "selector": "body > div:nth-of-type(2) > footer",
+        "rect": {
+          "x": 0,
+          "y": 2969.7,
+          "width": 1440,
+          "height": 81
+        }
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "name": "Notifications",
+        "selector": "body > div:nth-of-type(3)",
+        "rect": {
+          "x": 1392,
+          "y": 952,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "interactionStates": [
+      {
+        "selector": "body > a",
+        "text": "Skip to content",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(253, 253, 251) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > a",
+        "text": "INTERNET COURT\nPUBLIC CASE DOCKET",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(1)",
+        "text": "Pricing",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(38, 38, 37)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(38, 38, 37) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(1)",
+        "text": "Pricing",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(38, 38, 37)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(38, 38, 37) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(2)",
+        "text": "Contact",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(38, 38, 37)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(38, 38, 37) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(2)",
+        "text": "Contact",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(38, 38, 37)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(38, 38, 37) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(3)",
+        "text": "Sign in",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(38, 38, 37)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(38, 38, 37) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(3)",
+        "text": "Sign in",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(38, 38, 37)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(38, 38, 37) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(4)",
+        "text": "File a case",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(253, 253, 251) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "div:nth-of-type(2) > main > section:nth-of-type(1) > div:nth-of-type(1) > div > a:nth-of-type(1)",
+        "text": "File a case",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(253, 253, 251) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "div:nth-of-type(2) > main > section:nth-of-type(1) > div:nth-of-type(1) > div > a:nth-of-type(2)",
+        "text": "See how it works",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "div:nth-of-type(2) > main > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(3) > a",
+        "text": "terms",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(138, 136, 128)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(138, 136, 128) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(138, 136, 128)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > main > section:nth-of-type(5) > a",
+        "text": "See membership",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(253, 253, 251) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(1)",
+        "text": "Membership",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(1)",
+        "text": "Membership",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(2)",
+        "text": "Contact",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(2)",
+        "text": "Contact",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(3)",
+        "text": "Privacy",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(3)",
+        "text": "Privacy",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(4)",
+        "text": "Terms",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(4)",
+        "text": "Terms",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(5)",
+        "text": "X",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(5)",
+        "text": "X",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      }
+    ]
+  }
+]

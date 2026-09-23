@@ -1,0 +1,58 @@
+[
+  {
+    "file": "components/screenshots/home-01-header.png",
+    "tag": "header",
+    "index": 1,
+    "width": 1440,
+    "height": 85
+  },
+  {
+    "file": "components/screenshots/home-02-main.png",
+    "tag": "main",
+    "index": 2,
+    "width": 1440,
+    "height": 2805
+  },
+  {
+    "file": "components/screenshots/home-03-section.png",
+    "tag": "section",
+    "index": 3,
+    "width": 1040,
+    "height": 575
+  },
+  {
+    "file": "components/screenshots/home-04-section.png",
+    "tag": "section",
+    "index": 4,
+    "width": 1040,
+    "height": 432
+  },
+  {
+    "file": "components/screenshots/home-05-section.png",
+    "tag": "section",
+    "index": 5,
+    "width": 1040,
+    "height": 620
+  },
+  {
+    "file": "components/screenshots/home-06-section.png",
+    "tag": "section",
+    "index": 6,
+    "width": 1040,
+    "height": 885
+  },
+  {
+    "file": "components/screenshots/home-07-section.png",
+    "tag": "section",
+    "index": 7,
+    "width": 1040,
+    "height": 289
+  },
+  {
+    "file": "components/screenshots/home-08-footer.png",
+    "tag": "footer",
+    "index": 8,
+    "width": 1440,
+    "height": 81
+  }
+]

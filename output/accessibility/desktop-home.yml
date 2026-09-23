@@ -1,0 +1,150 @@
+- generic [active] [ref=f2e1] [box=0,0,1440,3051]:
+  - link "Skip to content" [ref=f2e2] [cursor=pointer] [box=16,-60,146,40]:
+    - /url: "#main"
+  - generic [ref=f2e3] [box=0,0,1440,3051]:
+    - banner [ref=f2e4] [box=0,0,1440,85]:
+      - generic [ref=f2e5] [box=200,20,1040,44]:
+        - link "INTERNET COURT PUBLIC CASE DOCKET" [ref=f2e6] [cursor=pointer] [box=224,23,175,39]:
+          - /url: /
+          - text: INTERNET COURT
+          - generic [ref=f2e7] [box=224,49,175,13]: PUBLIC CASE DOCKET
+        - navigation "Primary" [ref=f2e8] [box=857,20,359,44]:
+          - link "Pricing" [ref=f2e9] [cursor=pointer] [box=857,26,71,33]:
+            - /url: /pricing
+          - link "Contact" [ref=f2e10] [cursor=pointer] [box=936,26,77,33]:
+            - /url: /contact
+          - link "Sign in" [ref=f2e11] [cursor=pointer] [box=1020,26,69,33]:
+            - /url: /signin?next=%2F
+          - link "File a case" [ref=f2e12] [cursor=pointer] [box=1098,20,118,44]:
+            - /url: /new
+    - main [ref=f2e13] [box=0,85,1440,2805]:
+      - generic [ref=f2e14] [box=200,85,1040,575]:
+        - generic [ref=f2e15] [box=224,149,519,447]:
+          - paragraph [ref=f2e16] [box=224,161,519,15]: Filed in the court of public opinion
+          - heading "Someone is wrong. Probably you." [level=1] [ref=f2e17] [box=224,188,519,200]: Someone is wrong.Probably you.
+          - paragraph [ref=f2e18] [box=224,408,519,59]: Put your argument on trial. Let strangers vote. Get a verdict worth sending to the group chat.
+          - generic [ref=f2e19] [box=224,499,519,44]:
+            - link "File a case" [ref=f2e20] [cursor=pointer] [box=224,499,142,44]:
+              - /url: /new
+            - link "See how it works" [ref=f2e23] [cursor=pointer] [box=378,499,165,44]:
+              - /url: "#how"
+          - paragraph [ref=f2e24] [box=224,567,519,16]:
+            - text: Real votes, permanent case links, no fabricated activity — see our
+            - link "terms" [ref=f2e25] [cursor=pointer] [box=633,567,35,16]:
+              - /url: /terms
+            - text: .
+        - generic [aria-hidden] [ref=f2e26] [box=791,230,425,285]:
+          - generic [ref=f2e27] [box=792,231,423,35]:
+            - generic [ref=f2e28] [box=808,241,120,14]: No. 2026-PUB-0001
+            - generic [ref=f2e29] [box=1058,241,141,14]: Illustrative example
+          - generic [ref=f2e30] [box=792,266,423,248]:
+            - heading [level=3] [ref=f2e31] [box=816,290,375,53]: "\"I ate the last slice. My roommate says I owe them.\""
+            - paragraph [ref=f2e32] [box=816,351,375,45]: Filed by a real user, voted on by real strangers. This is what a filing looks like — not an actual case.
+            - generic [ref=f2e36] [box=816,428,375,15]:
+              - generic [ref=f2e37] [box=816,428,65,15]: FOR · 54%
+              - generic [ref=f2e38] [box=1097,428,94,15]: AGAINST · 46%
+            - generic [ref=f2e39] [box=816,459,375,31]: VERDICT PENDING
+      - separator [ref=f2e41] [box=0,660,1040,1]
+      - generic [ref=f2e42] [box=200,661,1040,432]:
+        - paragraph [ref=f2e43] [box=224,753,992,15]: How it works
+        - heading "Three steps to a verdict." [level=2] [ref=f2e44] [box=224,780,992,42]
+        - generic [ref=f2e45] [box=224,853,992,160]:
+          - generic [ref=f2e46] [box=224,853,309,160]:
+            - paragraph [ref=f2e47] [box=224,866,309,17]: Step 1
+            - heading "File the case" [level=3] [ref=f2e48] [box=224,891,309,24]
+            - paragraph [ref=f2e49] [box=224,930,309,68]: Write the argument the way you'd actually explain it to someone. No character-limit gimmicks.
+          - generic [ref=f2e50] [box=565,853,309,160]:
+            - paragraph [ref=f2e51] [box=565,866,309,17]: Step 2
+            - heading "Strangers vote" [level=3] [ref=f2e52] [box=565,891,309,24]
+            - paragraph [ref=f2e53] [box=565,930,309,68]: Anyone with a public link can read it. Signed-in users cast one real vote per case.
+          - generic [ref=f2e54] [box=907,853,309,160]:
+            - paragraph [ref=f2e55] [box=907,866,309,17]: Step 3
+            - heading "Get the verdict" [level=3] [ref=f2e56] [box=907,891,309,24]
+            - paragraph [ref=f2e57] [box=907,930,309,45]: The verdict is just the real vote count. Share the link, settle the argument.
+      - separator [ref=f2e58] [box=0,1093,1040,1]
+      - generic [ref=f2e59] [box=200,1094,1040,620]:
+        - paragraph [ref=f2e60] [box=224,1186,992,15]: The alternative
+        - heading "You have other ways to settle this." [level=2] [ref=f2e61] [box=224,1213,992,42]
+        - paragraph [ref=f2e62] [box=224,1271,992,20]: Here's how they stack up.
+        - generic [ref=f2e63] [box=224,1327,992,319]:
+          - table [ref=f2e64] [box=225,1328,990,264]:
+            - rowgroup [ref=f2e65] [box=225,1328,990,53]:
+              - row [ref=f2e66] [box=225,1328,990,53]:
+                - columnheader [ref=f2e67] [box=225,1328,201,53]
+                - columnheader "Internet Court" [ref=f2e68] [box=426,1328,198,53]
+                - columnheader "Group chat" [ref=f2e69] [box=624,1328,211,53]
+                - columnheader "Reddit thread" [ref=f2e70] [box=835,1328,191,53]
+                - columnheader "Actual court" [ref=f2e71] [box=1026,1328,189,53]
+            - rowgroup [ref=f2e72] [box=225,1380,990,212]:
+              - row [ref=f2e73] [box=225,1380,990,53]:
+                - rowheader "Ends with a real verdict" [ref=f2e74] [box=225,1380,201,53]
+                - cell "Yes, a number decides" [ref=f2e75] [box=426,1380,198,53]
+                - cell "Never. Still going." [ref=f2e76] [box=624,1380,211,53]
+                - cell "Upvotes, not a verdict" [ref=f2e77] [box=835,1380,191,53]
+                - cell "Yes. Legally binding." [ref=f2e78] [box=1026,1380,189,53]
+              - row [ref=f2e79] [box=225,1433,990,53]:
+                - rowheader "Costs to start" [ref=f2e80] [box=225,1433,201,53]
+                - cell "Free" [ref=f2e81] [box=426,1433,198,53]
+                - cell "Free" [ref=f2e82] [box=624,1433,211,53]
+                - cell "Free" [ref=f2e83] [box=835,1433,191,53]
+                - cell "Filing fees + a lawyer" [ref=f2e84] [box=1026,1433,189,53]
+              - row [ref=f2e85] [box=225,1486,990,53]:
+                - rowheader "Time to a result" [ref=f2e86] [box=225,1486,201,53]
+                - cell "Minutes" [ref=f2e87] [box=426,1486,198,53]
+                - cell "Eternal" [ref=f2e88] [box=624,1486,211,53]
+                - cell "Buried by page 2" [ref=f2e89] [box=835,1486,191,53]
+                - cell "Months, maybe years" [ref=f2e90] [box=1026,1486,189,53]
+              - row [ref=f2e91] [box=225,1539,990,53]:
+                - rowheader "Your mom can see it" [ref=f2e92] [box=225,1539,201,53]
+                - cell "Only if you share it" [ref=f2e93] [box=426,1539,198,53]
+                - cell "She's already in the chat" [ref=f2e94] [box=624,1539,211,53]
+                - cell "Anonymous, so no" [ref=f2e95] [box=835,1539,191,53]
+                - cell "Public record, so yes" [ref=f2e96] [box=1026,1539,189,53]
+          - generic [ref=f2e97] [box=225,1592,990,53]: We're not replacing small claims court. We're replacing the group chat argument that never actually ends.
+      - separator [ref=f2e98] [box=0,1714,1040,1]
+      - generic [ref=f2e99] [box=200,1715,1040,885]:
+        - paragraph [ref=f2e100] [box=224,1807,992,15]: Questions
+        - heading "What people ask before filing." [level=2] [ref=f2e101] [box=224,1834,992,42]
+        - generic [ref=f2e102] [box=224,1899,720,621]:
+          - generic [ref=f2e103] [box=224,1899,720,95]:
+            - heading "Can anyone read a public case?" [level=3] [ref=f2e104] [box=224,1899,720,21]
+            - paragraph [ref=f2e105] [box=224,1926,720,47]: Yes. Public cases are designed to be opened and shared by anyone. You only need to sign in when you want to vote or file a case.
+          - generic [ref=f2e106] [box=224,2014,720,71]:
+            - heading "How is the verdict decided?" [level=3] [ref=f2e107] [box=224,2014,720,21]
+            - paragraph [ref=f2e108] [box=224,2041,720,23]: The verdict is based on the stored for and against vote totals. There is no hidden consensus score.
+          - generic [ref=f2e109] [box=224,2105,720,95]:
+            - heading "Do I need a password?" [level=3] [ref=f2e110] [box=224,2105,720,21]
+            - paragraph [ref=f2e111] [box=224,2132,720,47]: No. Internet Court uses Google sign in, so you can enter without creating or remembering another password.
+          - generic [ref=f2e112] [box=224,2220,720,95]:
+            - heading "Can I report a case?" [level=3] [ref=f2e113] [box=224,2220,720,21]
+            - paragraph [ref=f2e114] [box=224,2247,720,47]: Yes. Every public case has a reporting path for abuse such as harassment, threats, personal data, hate and spam.
+          - generic [ref=f2e115] [box=224,2334,720,95]:
+            - heading "Is filing a case free?" [level=3] [ref=f2e116] [box=224,2334,720,21]
+            - paragraph [ref=f2e117] [box=224,2361,720,47]: Public cases are free to file. Membership is for people who want more control over their cases and identity.
+          - generic [ref=f2e118] [box=224,2449,720,71]:
+            - heading "Does Internet Court use fake votes?" [level=3] [ref=f2e119] [box=224,2449,720,21]
+            - paragraph [ref=f2e120] [box=224,2476,720,23]: No. The product is built around real authenticated votes and server side checks. Nothing is seeded.
+      - separator [ref=f2e121] [box=0,2600,1040,1]
+      - generic [ref=f2e122] [box=200,2601,1040,289]:
+        - generic [ref=f2e123] [box=224,2681,723,129]:
+          - paragraph [ref=f2e124] [box=224,2693,723,15]: Membership
+          - heading "Keep the jury free. Pay for more control." [level=2] [ref=f2e125] [box=224,2720,723,42]
+          - paragraph [ref=f2e126] [box=224,2770,480,40]: Free users can file public cases and vote. Membership adds private and unlisted cases.
+        - link "See membership" [ref=f2e127] [cursor=pointer] [box=1028,2723,188,44]:
+          - /url: /pricing
+    - contentinfo [ref=f2e130] [box=0,2970,1440,81]:
+      - generic [ref=f2e131] [box=200,3003,1040,16]:
+        - generic [ref=f2e132] [box=224,3003,85,16]: Internet Court
+        - generic [ref=f2e133] [box=934,3003,282,16]:
+          - link "Membership" [ref=f2e134] [cursor=pointer] [box=934,3003,77,16]:
+            - /url: /pricing
+          - link "Contact" [ref=f2e135] [cursor=pointer] [box=1027,3003,48,16]:
+            - /url: /contact
+          - link "Privacy" [ref=f2e136] [cursor=pointer] [box=1091,3003,46,16]:
+            - /url: /privacy
+          - link "Terms" [ref=f2e137] [cursor=pointer] [box=1153,3003,38,16]:
+            - /url: /terms
+          - link "X" [ref=f2e138] [cursor=pointer] [box=1207,3003,9,16]:
+            - /url: https://x.com/qofeno
+  - region "Notifications" [ref=f2e139] [box=1392,952,32,32]
+  - alert [ref=f2e140] [box=-1,3050,1,1]

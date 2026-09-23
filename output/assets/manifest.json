@@ -1,0 +1,88 @@
+{
+  "version": 2,
+  "capturedAt": "2026-09-23T16:30:59.505Z",
+  "totalAssets": 6,
+  "capturedAssets": 6,
+  "totalBytes": 128438,
+  "assets": [
+    {
+      "id": "4c5bf992a9968a1c",
+      "source": "https://www.loopproof.me/_next/static/immutable/media/03bda585a99c6450-s.p.0glcd8n2pdab0.woff2",
+      "localPath": "assets/fonts/4c5bf992a9968a1c-03bda585a99c6450-s.p.0glcd8n2pdab0.woff2",
+      "type": "font",
+      "contentType": "font/woff2",
+      "bytes": 36560,
+      "status": 200,
+      "pages": [
+        "https://loopproof.me/"
+      ],
+      "captured": true,
+      "reason": "response.body: Protocol error (Network.getResponseBody): No resource with given identifier found\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation."
+    },
+    {
+      "id": "2d7a5ba94d5b7f20",
+      "source": "https://www.loopproof.me/_next/static/immutable/media/23b7a97ae3b5c134-s.p.0fcfx2a-jndc5.woff2",
+      "localPath": "assets/fonts/2d7a5ba94d5b7f20-23b7a97ae3b5c134-s.p.0fcfx2a-jndc5.woff2",
+      "type": "font",
+      "contentType": "font/woff2",
+      "bytes": 10120,
+      "status": 200,
+      "pages": [
+        "https://loopproof.me/"
+      ],
+      "captured": true
+    },
+    {
+      "id": "2ada333561478d53",
+      "source": "https://www.loopproof.me/_next/static/immutable/media/83afe278b6a6bb3c-s.p.45535valc9rzk.woff2",
+      "localPath": "assets/fonts/2ada333561478d53-83afe278b6a6bb3c-s.p.45535valc9rzk.woff2",
+      "type": "font",
+      "contentType": "font/woff2",
+      "bytes": 48432,
+      "status": 200,
+      "pages": [
+        "https://loopproof.me/"
+      ],
+      "captured": true
+    },
+    {
+      "id": "47b52197378fdc26",
+      "source": "https://www.loopproof.me/_next/static/immutable/media/99e609270109b47d-s.p.1dgcou5jor5q_.woff2",
+      "localPath": "assets/fonts/47b52197378fdc26-99e609270109b47d-s.p.1dgcou5jor5q_.woff2",
+      "type": "font",
+      "contentType": "font/woff2",
+      "bytes": 10052,
+      "status": 200,
+      "pages": [
+        "https://loopproof.me/"
+      ],
+      "captured": true
+    },
+    {
+      "id": "933c1b0bb2c2eadd",
+      "source": "https://www.loopproof.me/icon.svg?icon.2nrjagaqrutui.svg",
+      "localPath": "assets/images/933c1b0bb2c2eadd-icon.svg",
+      "type": "image",
+      "contentType": "image/svg+xml",
+      "bytes": 283,
+      "status": 200,
+      "pages": [
+        "https://loopproof.me/"
+      ],
+      "captured": true
+    },
+    {
+      "id": "f5404f63053b2524",
+      "source": "https://www.loopproof.me/_next/static/immutable/chunks/2vc41nb4a1c_r.css",
+      "localPath": "assets/styles/f5404f63053b2524-2vc41nb4a1c_r.css",
+      "type": "stylesheet",
+      "contentType": "text/css; charset=utf-8",
+      "bytes": 22991,
+      "status": 200,
+      "pages": [
+        "https://loopproof.me/"
+      ],
+      "captured": true
+    }
+  ]
+}

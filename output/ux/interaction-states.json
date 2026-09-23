@@ -1,0 +1,651 @@
+[
+  {
+    "url": "https://loopproof.me/",
+    "states": [
+      {
+        "selector": "body > a",
+        "text": "Skip to content",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(253, 253, 251) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > a",
+        "text": "INTERNET COURT\nPUBLIC CASE DOCKET",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(1)",
+        "text": "Pricing",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(38, 38, 37)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(38, 38, 37) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(1)",
+        "text": "Pricing",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(38, 38, 37)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(38, 38, 37) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(2)",
+        "text": "Contact",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(38, 38, 37)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(38, 38, 37) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(2)",
+        "text": "Contact",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(38, 38, 37)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(38, 38, 37) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(3)",
+        "text": "Sign in",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(38, 38, 37)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(38, 38, 37) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(3)",
+        "text": "Sign in",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(38, 38, 37)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(38, 38, 37) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > header > div > nav > a:nth-of-type(4)",
+        "text": "File a case",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(253, 253, 251) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "div:nth-of-type(2) > main > section:nth-of-type(1) > div:nth-of-type(1) > div > a:nth-of-type(1)",
+        "text": "File a case",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(253, 253, 251) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "div:nth-of-type(2) > main > section:nth-of-type(1) > div:nth-of-type(1) > div > a:nth-of-type(2)",
+        "text": "See how it works",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "div:nth-of-type(2) > main > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(3) > a",
+        "text": "terms",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(138, 136, 128)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(138, 136, 128) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(138, 136, 128)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > main > section:nth-of-type(5) > a",
+        "text": "See membership",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(253, 253, 251) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(253, 253, 251)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(1)",
+        "text": "Membership",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(1)",
+        "text": "Membership",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(2)",
+        "text": "Contact",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(2)",
+        "text": "Contact",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(3)",
+        "text": "Privacy",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(3)",
+        "text": "Privacy",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(4)",
+        "text": "Terms",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(4)",
+        "text": "Terms",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(5)",
+        "text": "X",
+        "state": "hover",
+        "changed": true,
+        "before": {
+          "color": "rgb(74, 74, 70)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(74, 74, 70) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      },
+      {
+        "selector": "body > div:nth-of-type(2) > footer > div > span:nth-of-type(2) > a:nth-of-type(5)",
+        "text": "X",
+        "state": "focus",
+        "changed": true,
+        "before": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) none 3px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        },
+        "after": {
+          "color": "rgb(26, 26, 26)",
+          "backgroundColor": "",
+          "borderColor": "",
+          "boxShadow": "",
+          "transform": "none",
+          "opacity": "1",
+          "outline": "rgb(26, 26, 26) solid 2px",
+          "outlineColor": "",
+          "outlineWidth": ""
+        }
+      }
+    ]
+  }
+]
