@@ -246,7 +246,7 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
         const shotDir=join(output,"screenshots",viewport.name);await mkdir(shotDir,{recursive:true});
         await page.screenshot({path:join(shotDir,name+".png"),fullPage:true,scale:"css",animations:"disabled"});
         progress(options,`Extracting responsive evidence for ${viewport.name}`);
-        const responsive=await extractPage(page,url,{interactions:false});
+        const responsive=await extractPage(page,url,{interactions:true});
         assets.addPage(url,responsive.assetHints);
         await writeFile(join(output,"responsive",viewport.name+"-"+name+".json"),JSON.stringify(responsive,null,2));
         const axe=await captureAccessibilityAudit(page,output,viewport.name,name,options.onProgress);
