@@ -55,7 +55,7 @@ export interface PageEvidence {
   forms:Array<{method:string;action:string;selector:string;fields:Array<{tag:string;type:string|null;name:string|null;label:string|null;placeholder:string|null;required:boolean}>}>;
   navigation:Array<{selector:string;items:string[]}>;
   interactionStates:Array<{selector:string;text:string;state:"hover"|"focus";changed:boolean;before:Record<string,string>;after:Record<string,string>}>;
-  motion:Array<{selector:string;property:string;duration:string;timing:string;animation:string}>;
+  motion:Array<{selector:string;property:string;duration:string;timing:string;animation:string;source?:string;delay?:string;iterations?:string;playState?:string;keyframes?:Array<Record<string,string>>}>;
   ariaSnapshot:string;
 }
 
@@ -94,7 +94,7 @@ export async function extractPage(page:Page,url:string,options:{interactions?:bo
     };
     const els=Array.from(document.querySelectorAll("*")) as HTMLElement[];
     const colors:Record<string,number>={},fontCounts:Record<string,number>={},fontSizes:Record<string,number>={},radii:Record<string,number>={},spacing:Record<string,number>={},shadows:Record<string,number>={};
-    const motion:Array<{selector:string;property:string;duration:string;timing:string;animation:string}>=[];
+    const motion:Array<{selector:string;property:string;duration:string;timing:string;animation:string;source?:string;delay?:string;iterations?:string;playState?:string;keyframes?:Array<Record<string,string>>}>=[];
 
     for(const el of els){
       const s=getComputedStyle(el);
@@ -126,14 +126,24 @@ export async function extractPage(page:Page,url:string,options:{interactions?:bo
     }));
 
     const fonts:Array<{family:string;weight:string;style:string;source:string}>=[];document.fonts.forEach(f=>fonts.push({family:f.family,weight:f.weight,style:f.style,source:"document.fonts"}));
-    const images=Array.from(document.images).map(i=>({src:i.currentSrc||i.src,alt:i.alt,width:i.naturalWidth,height:i.naturalHeight})).filter(x=>x.src);
+    const images=Array.from(document.images).map(i=>({src:i.currentSrc||i.src,alt:i.alt,width:i.naturalWidth,height:i.naturalHeight,srcset:i.getAttribute("srcset")||"",sizes:i.getAttribute("sizes")||""})).filter(x=>x.src);
 
     const assetHints:PageEvidence["assetHints"]=[];
     const addAsset=(source:string,type:PageEvidence["assetHints"][number]["type"],extra:Partial<PageEvidence["assetHints"][number]>={})=>{
       if(!source||source.startsWith("data:")||assetHints.some(x=>x.source===source))return;
       assetHints.push({source,type,...extra});
     };
-    for(const image of images)addAsset(image.src,"image",{alt:image.alt,width:image.width,height:image.height});
+    for(const image of images){
+      addAsset(image.src,"image",{alt:image.alt,width:image.width,height:image.height});
+      for(const candidate of image.srcset.split(",").map(x=>x.trim().split(/\\s+/)[0]).filter(Boolean)){
+        try{addAsset(new URL(candidate,location.href).href,"image",{alt:image.alt})}catch{}
+      }
+    }
+    for(const source of Array.from(document.querySelectorAll("picture source[srcset]"))){
+      for(const candidate of (source.getAttribute("srcset")||"").split(",").map(x=>x.trim().split(/\\s+/)[0]).filter(Boolean)){
+        try{addAsset(new URL(candidate,location.href).href,"image")}catch{}
+      }
+    }
     for(const link of Array.from(document.querySelectorAll("link[href]"))){
       const rel=(link.getAttribute("rel")||"").toLowerCase();const href=new URL(link.getAttribute("href")!,location.href).href;
       if(rel.includes("icon")||rel.includes("apple-touch-icon")||rel.includes("mask-icon"))addAsset(href,"icon");
@@ -154,6 +164,30 @@ export async function extractPage(page:Page,url:string,options:{interactions?:bo
       for(let i=0;i<style.length;i++){const name=style[i];if(name.startsWith("--")&&!seenVars.has(name)){seenVars.add(name);cssVariables.push({name,value:style.getPropertyValue(name).trim()})}}
     }
 
+    const webAnimations=Array.from(document.getAnimations()).slice(0,300).map(animation=>{
+      const target=(animation.effect as KeyframeEffect|null)?.target as Element|null;
+      const timing=animation.effect?.getComputedTiming();
+      let keyframes:Array<Record<string,string>>=[];
+      try{keyframes=((animation.effect as KeyframeEffect).getKeyframes?.()??[]).slice(0,20).map(frame=>{
+        const out:Record<string,string>={};
+        for(const [k,v] of Object.entries(frame))if(typeof v==="string"||typeof v==="number")out[k]=String(v);
+        return out;
+      })}catch{}
+      return {
+        selector:target?selectorFor(target):"document",
+        property:target?((animation.effect as KeyframeEffect).getKeyframes?.().flatMap(frame=>Object.keys(frame)).filter(k=>!["offset","easing","composite","computedOffset"].includes(k)).filter((v,i,a)=>a.indexOf(v)===i).join(",")||"unknown"):"unknown",
+        duration:timing?.duration==null?"auto":String(timing.duration),
+        timing:String(timing?.easing??"auto"),
+        animation:animation.constructor.name,
+        source:"Web Animations API",
+        delay:String(timing?.delay??0),
+        iterations:String(timing?.iterations??1),
+        playState:animation.playState,
+        keyframes
+      };
+    });
+    motion.push(...webAnimations);
+    
     const styleRules={mediaQueries:[] as string[],keyframes:[] as string[],externalStylesheets:Array.from(document.querySelectorAll('link[rel~="stylesheet"]')).map(x=>new URL((x as HTMLLinkElement).href,location.href).href)};
     for(const sheet of Array.from(document.styleSheets)){try{for(const rule of Array.from(sheet.cssRules||[])){if(rule.type===CSSRule.MEDIA_RULE)styleRules.mediaQueries.push((rule as CSSMediaRule).conditionText);if(rule.type===CSSRule.KEYFRAMES_RULE)styleRules.keyframes.push((rule as CSSKeyframesRule).name)}}catch{}}
     styleRules.mediaQueries=[...new Set(styleRules.mediaQueries)];styleRules.keyframes=[...new Set(styleRules.keyframes)];
@@ -199,7 +233,7 @@ export async function extractPage(page:Page,url:string,options:{interactions?:bo
   let interactionStates:PageEvidence["interactionStates"]=[];
   if(options.interactions!==false){
     const candidates=await page.locator("a,button,input,textarea,select,[role='button'],summary,[tabindex]").all();
-    for(const locator of candidates.slice(0,18)){
+    for(const locator of candidates.slice(0,40)){
       try{
         if(!(await locator.isVisible()))continue;
         const selector=await locator.evaluate(el=>{
