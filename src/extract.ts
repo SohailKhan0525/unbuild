@@ -66,7 +66,7 @@ export async function extractPage(page:Page,url:string):Promise<PageEvidence>{
     }
     for(const el of els){
       const bg=getComputedStyle(el).backgroundImage;
-      for(const match of bg.matchAll(/url\\(["']?([^"')]+)["']?\\)/g)){
+      for(const match of bg.matchAll(/url\(["']?([^"')]+)["']?\)/g)){
         try{addAsset(new URL(match[1],location.href).href,"image")}catch{}
       }
     }
