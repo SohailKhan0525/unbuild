@@ -81,6 +81,24 @@ async function getContext(browser:Browser,connected:boolean):Promise<BrowserCont
   if(connected){const existing=browser.contexts()[0];if(existing)return existing;}
   return browser.newContext({viewport:{width:DEFAULT_VIEWPORTS[0].width,height:DEFAULT_VIEWPORTS[0].height}});
 }
+async function settlePage(page:Page,timeout:number){
+  await page.evaluate(async()=>{
+    try{await document.fonts?.ready}catch{}
+    const scrollHeight=Math.max(document.body?.scrollHeight??0,document.documentElement?.scrollHeight??0);
+    const step=Math.max(400,Math.floor(innerHeight*0.9));
+    for(let y=0;y<scrollHeight;y+=step){
+      window.scrollTo(0,y);
+      await new Promise(r=>setTimeout(r,40));
+    }
+    window.scrollTo(0,0);
+  }).catch(()=>{});
+  await page.waitForTimeout(Math.min(500,Math.max(100,timeout/60)));
+  await page.evaluate(()=>Promise.all(Array.from(document.images).map(img=>img.complete?Promise.resolve():new Promise<void>(resolve=>{
+    const done=()=>{img.removeEventListener("load",done);img.removeEventListener("error",done);resolve()};
+    img.addEventListener("load",done,{once:true});img.addEventListener("error",done,{once:true});
+  })))).catch(()=>{});
+}
+
 async function captureComponentScreenshots(page:Page,output:string,name:string,progressFn:(message:string)=>void){
   const dir=join(output,"components","screenshots");await mkdir(dir,{recursive:true});
   const locators=await page.locator("header,nav,main,aside,footer,section,article,form,dialog").all();
