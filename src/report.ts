@@ -42,10 +42,6 @@ export function aggregateTokenEvidence(pages:PageEvidence[]){
     shadows:{} as Record<string,number>,
     cssVariables:{} as Record<string,string>
   };
-  const add=(target:Record<string,number>,key:string)=>{
-    if(!key)return;
-    target[key]=(target[key]??0)+1;
-  };
   for(const page of pages){
     for(const [k,v] of Object.entries(page.tokens.colors))if(k!=="transparent"&&!/^rgba?\\(0, 0, 0, 0\\)$/.test(k))result.colors[k]=(result.colors[k]??0)+v;
     for(const [k,v] of Object.entries(page.tokens.fonts))result.fonts[k]=(result.fonts[k]??0)+v;
