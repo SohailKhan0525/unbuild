@@ -76,8 +76,8 @@ export async function extractPage(page:Page,url:string,options:{interactions?:bo
         let part=current.tagName.toLowerCase();
         const classes=Array.from(current.classList).filter(x=>/^[a-zA-Z_][\\w-]*$/.test(x)).slice(0,2);
         if(classes.length)part+="."+classes.map(CSS.escape).join(".");
-        const parent=current.parentElement;
-        if(parent){const same=Array.from(parent.children).filter(x=>x.tagName===current!.tagName);if(same.length>1)part+=":nth-of-type("+(same.indexOf(current)+1)+")"}
+        const parent:HTMLElement|null=current.parentElement;
+        if(parent){const same=Array.from(parent.children).filter((x:Element)=>x.tagName===current!.tagName);if(same.length>1)part+=":nth-of-type("+(same.indexOf(current)+1)+")"}
         parts.unshift(part);current=parent;
       }
       return parts.join(" > ")||el.tagName.toLowerCase();
@@ -195,7 +195,7 @@ export async function extractPage(page:Page,url:string,options:{interactions?:bo
     };
   },url);
 
-  const ariaSnapshot=await page.ariaSnapshot({mode:"ai",boxes:true,timeout:Math.min(5000,page.context()._options?.timeout??5000)}).catch(()=> "");
+  const ariaSnapshot=await page.ariaSnapshot({mode:"ai",boxes:true,timeout:5000}).catch(()=> "");
   let interactionStates:PageEvidence["interactionStates"]=[];
   if(options.interactions!==false){
     const candidates=await page.locator("a,button,input,textarea,select,[role='button'],summary,[tabindex]").all();
