@@ -114,7 +114,6 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
   for(const dir of ["screenshots","pages","evidence","tokens","components","ux","motion","responsive","accessibility","assets"])await mkdir(join(output,dir),{recursive:true});
 
   const connected=Boolean(options.cdpEndpoint);
-  if(process.platform==="android"&&!options.cdpEndpoint)throw new Error("Android/Termux requires --cdp with an existing Chromium-compatible browser endpoint.");
   const browser=await withHeartbeat(options,connected?`Connecting to Chromium over CDP: ${options.cdpEndpoint}`:"Launching Playwright Chromium…",launchBrowser(options));
   const evidence:PageEvidence[]=[];
   try{
