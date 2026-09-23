@@ -57,7 +57,9 @@
   "license": "MIT",
   "dependencies": {
     "@playwright/browser-chromium": "1.63.0",
-    "playwright": "1.63.0"
+    "playwright": "1.63.0",
+    "@axe-core/playwright": "4.13.0",
+    "postcss": "8.5.28"
   },
   "devDependencies": {
     "@types/node": "24.13.6",
