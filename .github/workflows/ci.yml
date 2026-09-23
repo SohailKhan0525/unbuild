@@ -50,4 +50,4 @@ jobs:
           test -s ./motion-smoke/accessibility/desktop-home.yml
           test -s ./motion-smoke/responsive/desktop-home.json
           test -s ./motion-smoke/screenshots/desktop/home.png
-          find ./motion-smoke/assets -type f | head -20
+          find ./motion-smoke/assets -type f -print
