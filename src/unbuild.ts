@@ -42,6 +42,54 @@ async function findAndroidChromium():Promise<string|undefined>{
   return undefined;
 }
 
+async function findSystemChromium():Promise<string|undefined>{
+  const platform=process.platform;
+  const candidates:string[]=[];
+  if(platform==="linux"){
+    candidates.push(
+      "/usr/bin/chromium",
+      "/usr/bin/chromium-browser",
+      "/usr/bin/google-chrome",
+      "/usr/bin/google-chrome-stable",
+      "/usr/bin/microsoft-edge",
+      "/usr/bin/microsoft-edge-stable",
+      "/snap/bin/chromium"
+    );
+  }else if(platform==="darwin"){
+    candidates.push(
+      "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+      "/Applications/Chromium.app/Contents/MacOS/Chromium",
+      "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge"
+    );
+  }else if(platform==="win32"){
+    const roots=[
+      process.env.PROGRAMFILES,
+      process.env["PROGRAMFILES(X86)"],
+      process.env.LOCALAPPDATA
+    ].filter((value):value is string=>Boolean(value));
+    for(const root of roots){
+      candidates.push(
+        join(root,"Google","Chrome","Application","chrome.exe"),
+        join(root,"Microsoft","Edge","Application","msedge.exe"),
+        join(root,"Chromium","Application","chrome.exe")
+      );
+    }
+  }
+
+  const pathSeparator=platform==="win32"?";":":";
+  const pathNames=platform==="win32"
+    ? ["chrome.exe","msedge.exe","chromium.exe","chromium-browser.exe"]
+    : ["chromium","chromium-browser","google-chrome","google-chrome-stable","microsoft-edge","microsoft-edge-stable"];
+  for(const directory of (process.env.PATH??"").split(pathSeparator).filter(Boolean)){
+    for(const name of pathNames)candidates.push(join(directory,name));
+  }
+
+  for(const candidate of candidates){
+    try{await access(candidate);return candidate}catch{}
+  }
+  return undefined;
+}
+
 async function withPlaywrightHost<T>(operation:()=>Promise<T>):Promise<T>{
   if(process.platform!=="android")return operation();
   const originalPlatform=process.platform;
@@ -63,6 +111,7 @@ async function launchBrowser(options:UnbuildOptions):Promise<Browser>{
 
   let executablePath=options.executablePath;
   if(android&&!executablePath)executablePath=await findAndroidChromium();
+  if(!android&&!executablePath)executablePath=await findSystemChromium();
   if(android&&!executablePath){
     throw new Error(
       "No Android Chromium browser was found. Install Termux Chromium with pkg install x11-repo && pkg install chromium, then rerun unbuild. " +
