@@ -184,6 +184,7 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
   const connected=Boolean(options.cdpEndpoint);
   const browser=await withHeartbeat(options,connected?`Connecting to Chromium over CDP: ${options.cdpEndpoint}`:"Launching Playwright Chromium…",launchBrowser(options));
   const evidence:PageEvidence[]=[];
+  const accessibilitySummaries:Array<Record<string,unknown>>=[];
   try{
     const context=await getContext(browser,connected);
     const page:Page=context.pages()[0]??await context.newPage();
@@ -260,7 +261,9 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
       }
     }
 
-    await assets.flush();const assetManifest=await assets.writeManifest();
+    await assets.flush();
+    await writeFile(join(output,"accessibility","summary.json"),JSON.stringify({version:1,scans:accessibilitySummaries},null,2));
+    const assetManifest=await assets.writeManifest();
     progress(options,`Writing reports and asset manifest (${assetManifest.filter(x=>x.captured).length} captured assets)…`);
     if(evidence.length){
       await writeFile(join(output,"evidence","all-pages.json"),JSON.stringify(evidence,null,2));
