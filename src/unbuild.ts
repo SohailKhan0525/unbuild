@@ -1,4 +1,4 @@
-import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
+import type { Browser, BrowserContext, Page } from "playwright";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { assertPublicUrl, discoverUrls } from "./discover.js";
@@ -27,7 +27,30 @@ async function withHeartbeat<T>(options:UnbuildOptions,message:string,operation:
   progress(options,message);const started=Date.now();const timer=setInterval(()=>progress(options,`${message} — ${Math.floor((Date.now()-started)/1000)}s elapsed`),5000);
   try{return await operation}finally{clearInterval(timer)}
 }
+let playwrightChromium:typeof import("playwright").chromium|undefined;
+
+async function loadChromium(options:UnbuildOptions){
+  if(playwrightChromium)return playwrightChromium;
+  const android=process.platform==="android";
+  if(android&&!options.cdpEndpoint){
+    throw new Error("Android/Termux requires --cdp with an existing Chromium-compatible browser. Playwright's bundled desktop Chromium cannot run as an Android host browser.");
+  }
+  const originalPlatform=process.platform;
+  let spoofed=false;
+  if(android){
+    Object.defineProperty(process,"platform",{value:"linux",configurable:true});
+    spoofed=true;
+  }
+  try{
+    playwrightChromium=(await import("playwright")).chromium;
+    return playwrightChromium;
+  }finally{
+    if(spoofed)Object.defineProperty(process,"platform",{value:originalPlatform,configurable:true});
+  }
+}
+
 async function launchBrowser(options:UnbuildOptions):Promise<Browser>{
+  const chromium=await loadChromium(options);
   if(options.cdpEndpoint)return chromium.connectOverCDP(options.cdpEndpoint,{timeout:options.timeout??30000});
   return chromium.launch({headless:options.headless??true,executablePath:options.executablePath});
 }
@@ -68,6 +91,7 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
   for(const dir of ["screenshots","pages","evidence","tokens","components","ux","motion","responsive","accessibility","assets"])await mkdir(join(output,dir),{recursive:true});
 
   const connected=Boolean(options.cdpEndpoint);
+  if(process.platform==="android"&&!options.cdpEndpoint)throw new Error("Android/Termux requires --cdp with an existing Chromium-compatible browser endpoint.");
   const browser=await withHeartbeat(options,connected?`Connecting to Chromium over CDP: ${options.cdpEndpoint}`:"Launching Playwright Chromium…",launchBrowser(options));
   const evidence:PageEvidence[]=[];
   try{
