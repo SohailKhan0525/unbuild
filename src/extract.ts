@@ -51,7 +51,7 @@ export interface PageEvidence {
   styleRules:{mediaQueries:string[];keyframes:string[];externalStylesheets:string[]};
   links:Array<{text:string;href:string;external:boolean;selector:string}>;
   controls:Array<{tag:string;type:string|null;text:string;aria:string|null;selector:string;rect:{width:number;height:number}}>;
-  buttons:Array<{text:string;aria:string|null;type:string|null;variant:string;selector:string;rect:{width:number;height:number};styles:Pick<ElementEvidence["styles"],"color"|"backgroundColor"|"border"|"borderRadius"|"boxShadow"|"fontSize"|"fontWeight"|"padding"|"height"}>;
+  buttons:Array<{text:string;aria:string|null;type:string|null;variant:string;selector:string;rect:{width:number;height:number};styles:Pick<ElementEvidence["styles"],"color"|"backgroundColor"|"border"|"borderRadius"|"boxShadow"|"fontSize"|"fontWeight"|"padding"|"height">}>;
   forms:Array<{method:string;action:string;selector:string;fields:Array<{tag:string;type:string|null;name:string|null;label:string|null;placeholder:string|null;required:boolean}>}>;
   navigation:Array<{selector:string;items:string[]}>;
   interactionStates:Array<{selector:string;text:string;state:"hover"|"focus";changed:boolean;before:Record<string,string>;after:Record<string,string>}>;
