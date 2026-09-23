@@ -207,7 +207,10 @@ Do not treat a frequency count as proof of a design token. Repeated values are e
 - document language metadata
 - image URLs, dimensions, and alt text
 - browser-delivered image, icon, font, stylesheet, media, and manifest assets saved locally under `assets/`
+- CSS-referenced assets discovered from captured stylesheets, including `@font-face`, background images, cursors, and imported CSS
 - asset manifest mapping every captured resource to its source URL and page usage
+- parsed stylesheet inventory with selectors, media queries, keyframes, custom properties, font-face declarations, and referenced assets
+- automated axe accessibility findings for each captured viewport
 - heading hierarchy, component geometry, navigation structure, forms, focus evidence, and CSS custom properties
 
 ### Responsive behavior
@@ -222,7 +225,7 @@ These are observation points, not claims about the site's original breakpoint va
 
 ### Motion
 
-unbuild records observable CSS transition and animation metadata exposed by computed styles.
+unbuild records observable CSS transition and animation metadata exposed by computed styles and the Web Animations API. Changed hover/focus states are also captured as element screenshots when possible.
 
 ### Assets
 
