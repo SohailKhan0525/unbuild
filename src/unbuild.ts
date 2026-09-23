@@ -1,5 +1,5 @@
 import type { Browser, BrowserContext, Page } from "playwright";
-import { mkdir, writeFile } from "node:fs/promises";
+import { access, mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { assertPublicUrl, discoverUrls } from "./discover.js";
 import { extractPage, type PageEvidence } from "./extract.js";
@@ -20,6 +20,12 @@ const DEFAULT_VIEWPORTS=[
   {name:"mobile",width:390,height:844}
 ];
 
+const ANDROID_CHROMIUM_PATHS=[
+  "/data/data/com.termux/files/usr/bin/chromium-browser",
+  "/data/data/com.termux/files/usr/bin/chromium",
+  "/data/data/com.termux/files/usr/lib/chromium/chrome"
+];
+
 export function safeName(value:string):string{return value.replace(/^https?:\/\//,"").replace(/[^a-zA-Z0-9._-]+/g,"-").replace(/-+/g,"-").replace(/^-|-$/g,"").slice(0,80)||"site";}
 function pageName(url:string):string{const u=new URL(url);const path=u.pathname.replace(/^\/|\/$/g,"").replace(/[^a-zA-Z0-9._-]+/g,"-");return path?path.slice(0,100):"home";}
 function progress(options:UnbuildOptions,message:string){options.onProgress?.(message);}
@@ -29,30 +35,47 @@ async function withHeartbeat<T>(options:UnbuildOptions,message:string,operation:
 }
 let playwrightChromium:typeof import("playwright").chromium|undefined;
 
-async function loadChromium(options:UnbuildOptions){
-  if(playwrightChromium)return playwrightChromium;
-  const android=process.platform==="android";
-  if(android&&!options.cdpEndpoint){
-    throw new Error("Android/Termux requires --cdp with an existing Chromium-compatible browser. Playwright's bundled desktop Chromium cannot run as an Android host browser.");
+async function findAndroidChromium():Promise<string|undefined>{
+  for(const candidate of ANDROID_CHROMIUM_PATHS){
+    try{await access(candidate);return candidate}catch{}
   }
+  return undefined;
+}
+
+async function withPlaywrightHost<T>(operation:()=>Promise<T>):Promise<T>{
+  if(process.platform!=="android")return operation();
   const originalPlatform=process.platform;
-  let spoofed=false;
-  if(android){
-    Object.defineProperty(process,"platform",{value:"linux",configurable:true});
-    spoofed=true;
-  }
-  try{
-    playwrightChromium=(await import("playwright")).chromium;
-    return playwrightChromium;
-  }finally{
-    if(spoofed)Object.defineProperty(process,"platform",{value:originalPlatform,configurable:true});
-  }
+  Object.defineProperty(process,"platform",{value:"linux",configurable:true});
+  try{return await operation()}
+  finally{Object.defineProperty(process,"platform",{value:originalPlatform,configurable:true})}
+}
+
+async function loadChromium():Promise<typeof import("playwright").chromium>{
+  if(playwrightChromium)return playwrightChromium;
+  playwrightChromium=await withPlaywrightHost(async()=>(await import("playwright")).chromium);
+  return playwrightChromium;
 }
 
 async function launchBrowser(options:UnbuildOptions):Promise<Browser>{
-  const chromium=await loadChromium(options);
+  const android=process.platform==="android";
+  const chromium=await loadChromium();
   if(options.cdpEndpoint)return chromium.connectOverCDP(options.cdpEndpoint,{timeout:options.timeout??30000});
-  return chromium.launch({headless:options.headless??true,executablePath:options.executablePath});
+
+  let executablePath=options.executablePath;
+  if(android&&!executablePath)executablePath=await findAndroidChromium();
+  if(android&&!executablePath){
+    throw new Error(
+      "No Android Chromium browser was found. Install Termux Chromium with pkg install x11-repo && pkg install chromium, then rerun unbuild. " +
+      "Alternatively start a Chromium-compatible browser with CDP and use --cdp http://127.0.0.1:9222."
+    );
+  }
+
+  const launchOptions={
+    headless:options.headless??true,
+    executablePath,
+    ...(android?{args:["--no-sandbox","--disable-dev-shm-usage"]}: {})
+  };
+  return withPlaywrightHost(()=>chromium.launch(launchOptions));
 }
 async function getContext(browser:Browser,connected:boolean):Promise<BrowserContext>{
   if(connected){const existing=browser.contexts()[0];if(existing)return existing;}
