@@ -19,7 +19,7 @@ unbuild is a Node.js CLI with platform-neutral extraction code.
 - **Android / Termux:** Node.js can run in Termux, but Playwright's bundled desktop Chromium is not an Android host browser. Use `--cdp` to connect unbuild to a Chromium-compatible browser exposing the Chrome DevTools Protocol.
 - **Other Unix-like environments:** use `--browser` or `--cdp` when a managed Playwright browser is unavailable.
 
-The npm package installs the Playwright Chromium browser during package installation on supported desktop platforms. If browser installation is intentionally skipped or unavailable, use `--browser` with an installed Chromium/Chrome/Edge binary or `--cdp` with an existing Chromium browser. Android / Termux uses CDP rather than the bundled desktop browser.
+The npm package installs the Playwright Chromium browser during package installation on supported desktop platforms. If browser installation is intentionally skipped or unavailable, use `--browser` with an installed Chromium/Chrome/Edge binary or `--cdp` with an existing Chromium browser. Android / Termux uses CDP rather than the bundled desktop browser. The CLI also keeps browser initialization lazy so `unbuild --help` works on Android even though Playwright does not recognize Android as a local browser-host platform.
 
 ## Install
 
@@ -85,7 +85,7 @@ A practical Android setup is:
 npx @agent-qofeno/unbuild https://www.example.com --cdp http://127.0.0.1:9222
 ```
 
-The CDP endpoint can be local, ADB-forwarded, or provided by a remote browser service. The exact Android browser setup varies by device and ROM; unbuild does not require Android-specific native code.
+The CDP endpoint can be local, ADB-forwarded, or provided by a remote browser service. The exact Android browser setup varies by device and ROM; unbuild does not require Android-specific native code. On Android/Termux, `--cdp` is required for an actual run; `--browser` is not a substitute for a browser that Playwright can launch natively.
 
 ## What it produces
 
