@@ -205,7 +205,7 @@ export async function extractPage(page:Page,url:string,options:{interactions?:bo
         const selector=await locator.evaluate(el=>{
           const e=el as HTMLElement;const id=e.id;if(id)return "#"+CSS.escape(id);
           const parts:string[]=[];let cur:Element|null=e;
-          while(cur&&cur!==document.documentElement){let p=cur.tagName.toLowerCase();const parent=cur.parentElement;if(parent){const same=Array.from(parent.children).filter(x=>x.tagName===cur!.tagName);if(same.length>1)p+=":nth-of-type("+(same.indexOf(cur)+1)+")"}parts.unshift(p);cur=parent;if(parts.length>5)break}
+          while(cur&&cur!==document.documentElement){let p=cur.tagName.toLowerCase();const parent:HTMLElement|null=cur.parentElement;if(parent){const same=Array.from(parent.children).filter((x:Element)=>x.tagName===cur!.tagName);if(same.length>1)p+=":nth-of-type("+(same.indexOf(cur)+1)+")"}parts.unshift(p);cur=parent;if(parts.length>5)break}
           return parts.join(" > ");
         });
         const styles=()=>locator.evaluate(el=>{const s=getComputedStyle(el);return Object.fromEntries(["color","backgroundColor","borderColor","boxShadow","transform","opacity","outline","outlineColor","outlineWidth"].map(k=>[k,s.getPropertyValue(k)])) as Record<string,string>});
