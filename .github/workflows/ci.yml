@@ -48,6 +48,7 @@ jobs:
           test -s ./motion-smoke/motion/summary.json
           test -s ./motion-smoke/ux/interaction-states.json
           test -s ./motion-smoke/styles/inventory.json
+          test -s ./motion-smoke/accessibility/summary.json
           test "$(find ./motion-smoke/accessibility -type f -name 'axe-*.json' | wc -l)" -gt 0
           test -s ./motion-smoke/accessibility/desktop-home.yml
           test -s ./motion-smoke/responsive/desktop-home.json
@@ -100,6 +101,7 @@ jobs:
           test -s assets/manifest.json
           test -s motion/summary.json
           test -s styles/inventory.json
+          test -s accessibility/summary.json
           test "$(find accessibility -type f -name 'axe-*.json' | wc -l)" -gt 0
           test -s ux/summary.json
           test "$(find accessibility -type f -name '*.yml' | wc -l)" -gt 0
