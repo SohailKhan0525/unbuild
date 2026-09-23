@@ -5,6 +5,7 @@ import { assertPublicUrl, discoverUrls } from "./discover.js";
 import { extractPage, type PageEvidence } from "./extract.js";
 import { renderAggregateReport } from "./report.js";
 import { AssetCollector } from "./assets.js";
+import { captureAccessibilityAudit, captureInteractionScreenshots } from "./quality.js";
 
 export interface UnbuildOptions {
   output?: string; pages?: number; timeout?: number;
@@ -209,7 +210,19 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
       const data=await extractPage(page,url,{interactions:true});
       progress(options,`Collecting source assets for ${url}`);
       for(const hint of data.assetHints)await assets.captureUrl(page,hint.source,url,hint.type,hint.alt);
-      assets.addPage(url,data.assetHints);evidence.push(data);
+      assets.addPage(url,data.assetHints);
+      for(let pass=0;pass<3;pass++){
+        const discovered=await assets.captureCssDependencies(page,url);
+        if(!discovered)break;
+      }
+      const interactionScreenshots=await captureInteractionScreenshots(page,output,name,data.interactionStates,options.onProgress);
+      if(interactionScreenshots.length){
+        data.interactionStates=data.interactionStates.map(state=>{
+          const screenshot=interactionScreenshots.find(x=>x.selector===state.selector&&x.state===state.state);
+          return screenshot?{...state,screenshot:screenshot.path}:state;
+        }) as PageEvidence["interactionStates"];
+      }
+      evidence.push(data);
       await writeFile(join(output,"pages",name+".json"),JSON.stringify(data,null,2));
       await writeFile(join(output,"pages",name+".html"),await page.content());
       await writeFile(join(output,"accessibility","desktop-"+name+".yml"),data.ariaSnapshot);
@@ -236,6 +249,13 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
         const responsive=await extractPage(page,url,{interactions:false});
         assets.addPage(url,responsive.assetHints);
         await writeFile(join(output,"responsive",viewport.name+"-"+name+".json"),JSON.stringify(responsive,null,2));
+        const axe=await captureAccessibilityAudit(page,output,viewport.name,name,options.onProgress);
+        if(axe){
+          await writeFile(
+            join(output,"accessibility",viewport.name+"-"+name+"-summary.json"),
+            JSON.stringify(axe,null,2)
+          );
+        }
         await writeFile(join(output,"accessibility",viewport.name+"-"+name+".yml"),responsive.ariaSnapshot);
       }
     }
@@ -259,7 +279,7 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
       "Pages analyzed: "+evidence.length,
       "Viewports: "+viewports.map(v=>v.name+" ("+v.width+"×"+v.height+")").join(", "),"",
       "This directory contains browser-grounded evidence for rebuilding the observed frontend.",
-      "Use screenshots for visual truth, pages/*.html for rendered structure, pages/*.json for computed geometry/styles, accessibility/*.yml for semantics, assets/ for reusable files, responsive/*.json for breakpoint behavior, and ux/motion for interaction evidence.",""
+      "Use screenshots for visual truth, pages/*.html for rendered structure, pages/*.json for computed geometry/styles, accessibility/*.yml for semantics, accessibility/axe-*.json for automated WCAG findings, assets/ for reusable files, styles/inventory.json for CSS structure and referenced assets, responsive/*.json for breakpoint behavior, and ux/motion for interaction evidence.",""
     ].join("\n"));
     progress(options,`Complete — ${evidence.length} page(s), ${evidence.length*viewports.length} screenshot(s)`);
     return{output,pages:evidence.length,screenshots:evidence.length*viewports.length};
