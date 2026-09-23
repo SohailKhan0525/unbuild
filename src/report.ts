@@ -1,6 +1,7 @@
 import type { PageEvidence } from "./extract.js";
 
-const top=(m:Record<string,number>,n=16)=>Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,n);
+const top=(m:Record<string,number>,n=16,filter:(value:string)=>boolean=()=>true)=>
+  Object.entries(m).filter(([k])=>filter(k)).sort((a,b)=>b[1]-a[1]).slice(0,n);
 const esc=(v:string)=>v.replace(/\\/g,"\\\\").replace(/\|/g,"/");
 const pageSummary=(p:PageEvidence)=>[
   "### "+(p.title||p.url),"",
@@ -34,7 +35,10 @@ export function renderReport(d:PageEvidence,ai=false):string{
   const lines:string[]=[];
   lines.push("# Unbuild — "+(ai?"AI Reconstruction Brief":"Visual Design & UX Evidence"),"","Source: "+d.url,"Viewport: "+d.viewport.width+"×"+d.viewport.height,"Title: "+(d.title||"—"),"");
   if(ai)lines.push("## Reconstruction contract","","Recreate the rendered experience, not the original source code. Treat screenshots as visual truth, HTML as structural truth, computed element records as geometry/style truth, captured assets as reusable source files, and ARIA evidence as interaction/semantics truth. Prefer measured values over inference. Never invent missing assets, breakpoints, states, or tokens.","");
-  else lines.push("## Visual summary","",...pageSummary(d),"## Evidence sources","", "- Full rendered HTML: pages/*.html","- Measured DOM/style evidence: pages/*.json","- AI accessibility tree: accessibility/*.yml","- Browser-delivered assets: assets/","- Responsive screenshots/evidence: screenshots/ and responsive/","- Interaction state evidence: ux/interaction-states.json","");
+  else lines.push("## Visual summary","",...pageSummary(d),"## Evidence sources","", "- Full rendered HTML: pages/*.html","- Measured DOM/style evidence: pages/*.json","- AI accessibility tree: accessibility/*.yml","- Browser-delivered assets: assets/","- Responsive screenshots/evidence: screenshots/ and responsive/","- Interaction state evidence: ux/interaction-states.json",
+    "- Interaction state screenshots: ux/states/",
+    "- Automated accessibility findings: accessibility/axe-*.json",
+    "- Parsed CSS inventory: styles/inventory.json","");
 
   lines.push("## Page anatomy","");
   for(const h of d.headings.slice(0,100))lines.push("- H"+h.level+" "+(h.text||"—")+" — "+h.selector+" — "+h.width+"×"+h.height);
@@ -122,6 +126,8 @@ export function renderAggregateReport(pages:PageEvidence[],source:string,ai=fals
   lines.push("","## CSS variables");for(const [k,v] of [...vars.entries()].sort())lines.push("- "+k+" = "+v);if(!vars.size)lines.push("- None captured.");
   lines.push("","## Responsive CSS evidence","- Media queries: "+([...media].join(" | ")||"none captured"),"- Keyframes: "+([...keyframes].join(" | ")||"none captured"));
   lines.push("","## UX surface","- Forms: "+forms,"- Controls: "+controls,"- Links: "+links,"- Images: "+images,"- Interaction deltas: "+pages.reduce((n,p)=>n+p.interactionStates.length,0));
+  const stateScreenshots=pages.reduce((n,p)=>n+p.interactionStates.filter(x=>(x as PageEvidence["interactionStates"][number]&{screenshot?:string}).screenshot).length,0);
+  lines.push("- Interaction state screenshots: "+stateScreenshots);
   lines.push("","## Asset reconstruction","", "Use assets/manifest.json as the authoritative local asset map. It records source URL, local path, type, byte size, content type, page references and capture status.");
   lines.push("","## Evidence hierarchy","","1. Screenshots and component screenshots — visual geometry and appearance.","2. Rendered HTML — structure and content.","3. Computed element JSON — dimensions, typography, color, spacing, borders, shadows and positioning.","4. ARIA snapshot — semantic hierarchy and accessible names.","5. Captured assets and stylesheets — reusable visual source material.","6. Markdown synthesis — human/agent guidance.","","Observed values are evidence of the rendered result; they do not claim to reveal the original application's source implementation.","");
   return lines.join("\n");
