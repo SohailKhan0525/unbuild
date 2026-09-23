@@ -51,3 +51,59 @@ jobs:
           test -s ./motion-smoke/responsive/desktop-home.json
           test -s ./motion-smoke/screenshots/desktop/home.png
           find ./motion-smoke/assets -type f -print
+
+  published-npm-motion:
+    needs: live-smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - name: Wait for published npm version to match latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euxo pipefail
+          for i in $(seq 1 40); do
+            release_tag="$(gh release view --repo "${{ github.repository }}" --json tagName --jq '.tagName' 2>/dev/null || true)"
+            npm_version="$(npm view @agent-qofeno/unbuild version 2>/dev/null || true)"
+            echo "release=${release_tag:-unknown} npm=${npm_version:-unknown}"
+            if [ -n "$release_tag" ] && [ "${release_tag#v}" = "$npm_version" ]; then
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "Published npm package did not converge on the latest GitHub release."
+          exit 1
+      - name: Install Chromium
+        run: sudo apt-get update && sudo apt-get install -y chromium
+      - name: Run exact published npx command
+        run: |
+          set -euxo pipefail
+          rm -rf /tmp/unbuild-published-motion
+          mkdir -p /tmp/unbuild-published-motion
+          cd /tmp/unbuild-published-motion
+          npm init -y
+          npx @agent-qofeno/unbuild http://motion.dev/
+      - name: Verify published Motion output
+        run: |
+          set -euxo pipefail
+          cd /tmp/unbuild-published-motion/unbuild-output
+          test -s AI.md
+          test -s DESIGN.md
+          test -s evidence/all-pages.json
+          test -s assets/manifest.json
+          test -s motion/summary.json
+          test -s ux/summary.json
+          test "$(find accessibility -type f -name '*.yml' | wc -l)" -gt 0
+          test "$(find screenshots/desktop -type f | wc -l)" -gt 0
+          test "$(find responsive -type f -name '*.json' | wc -l)" -gt 0
+          test -d assets/images
+          test -d assets/icons
+          test -d assets/fonts
+          test -d assets/styles
+          test -d assets/media
+          find . -type f -print | sort
