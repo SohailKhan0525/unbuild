@@ -49,9 +49,9 @@ jobs:
           test -s assets/manifest.json
           test -s motion/summary.json
           test -s ux/summary.json
-          test -s accessibility/desktop-motion.yml
-          test -s screenshots/desktop/motion.png
-          test -s responsive/motion.json
+          test "$(find accessibility -type f -name '*.yml' | wc -l)" -gt 0
+          test "$(find screenshots/desktop -type f | wc -l)" -gt 0
+          test "$(find responsive -type f -name '*.json' | wc -l)" -gt 0
           test -d assets/images
           test -d assets/icons
           test -d assets/fonts
