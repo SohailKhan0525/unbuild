@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import { basename, extname, join } from "node:path";
 import type { Page, Request } from "playwright";
+import { assertPublicUrl } from "./discover.js";
 
 export interface AssetRecord {
   id:string; source:string; localPath:string|null;
@@ -54,10 +55,11 @@ export class AssetCollector{
   async captureUrl(page:Page,url:string,pageUrl:string,type:AssetRecord["type"]="icon",alt?:string){
     let parsed:URL;try{parsed=new URL(url)}catch{return}
     if(!/^https?:$/i.test(parsed.protocol))return;
+    await assertPublicUrl(parsed);
     const old=this.records.get(url);
     if(old){if(!old.pages.includes(pageUrl))old.pages.push(pageUrl);if(alt&&!old.alt)old.alt=alt;return}
     try{
-      const response=await page.request.get(url,{timeout:15000,failOnStatusCode:false,maxRedirects:5});
+      const response=await page.request.get(url,{timeout:15000,failOnStatusCode:false,maxRedirects:0});
       const record:AssetRecord={id:assetId(url),source:url,localPath:null,type,contentType:response.headers()["content-type"]??null,bytes:0,status:response.status(),pages:[pageUrl],alt,captured:false};
       this.records.set(url,record);
       if(!response.ok()){record.reason="HTTP response was not successful";return}
