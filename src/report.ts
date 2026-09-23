@@ -31,6 +31,33 @@ function tokenSection(lines:string[],title:string,map:Record<string,number>,limi
   lines.push("","## "+title,"");for(const [k,v] of top(map,limit))lines.push("- "+prefix+k+" — observed "+v+"×");
 }
 
+export function aggregateTokenEvidence(pages:PageEvidence[]){
+  const result={
+    version:2,
+    colors:{} as Record<string,number>,
+    fonts:{} as Record<string,number>,
+    fontSizes:{} as Record<string,number>,
+    radii:{} as Record<string,number>,
+    spacing:{} as Record<string,number>,
+    shadows:{} as Record<string,number>,
+    cssVariables:{} as Record<string,string>
+  };
+  const add=(target:Record<string,number>,key:string)=>{
+    if(!key)return;
+    target[key]=(target[key]??0)+1;
+  };
+  for(const page of pages){
+    for(const [k,v] of Object.entries(page.tokens.colors))if(k!=="transparent"&&!/^rgba?\\(0, 0, 0, 0\\)$/.test(k))result.colors[k]=(result.colors[k]??0)+v;
+    for(const [k,v] of Object.entries(page.tokens.fonts))result.fonts[k]=(result.fonts[k]??0)+v;
+    for(const [k,v] of Object.entries(page.tokens.fontSizes))result.fontSizes[k]=(result.fontSizes[k]??0)+v;
+    for(const [k,v] of Object.entries(page.tokens.radii))if(k!=="0px")result.radii[k]=(result.radii[k]??0)+v;
+    for(const [k,v] of Object.entries(page.tokens.spacing))if(!["0px","normal","auto"].includes(k))result.spacing[k]=(result.spacing[k]??0)+v;
+    for(const [k,v] of Object.entries(page.tokens.shadows))if(k!=="none")result.shadows[k]=(result.shadows[k]??0)+v;
+    for(const variable of page.cssVariables)result.cssVariables[variable.name]=variable.value;
+  }
+  return result;
+}
+
 export function renderReport(d:PageEvidence,ai=false):string{
   const lines:string[]=[];
   lines.push("# Unbuild — "+(ai?"AI Reconstruction Brief":"Visual Design & UX Evidence"),"","Source: "+d.url,"Viewport: "+d.viewport.width+"×"+d.viewport.height,"Title: "+(d.title||"—"),"");
