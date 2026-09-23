@@ -54,7 +54,7 @@ export interface PageEvidence {
   buttons:Array<{text:string;aria:string|null;type:string|null;variant:string;selector:string;rect:{width:number;height:number};styles:Pick<ElementEvidence["styles"],"color"|"backgroundColor"|"border"|"borderRadius"|"boxShadow"|"fontSize"|"fontWeight"|"padding"|"height">}>;
   forms:Array<{method:string;action:string;selector:string;fields:Array<{tag:string;type:string|null;name:string|null;label:string|null;placeholder:string|null;required:boolean}>}>;
   navigation:Array<{selector:string;items:string[]}>;
-  interactionStates:Array<{selector:string;text:string;state:"hover"|"focus";changed:boolean;before:Record<string,string>;after:Record<string,string>}>;
+  interactionStates:Array<{selector:string;text:string;state:"hover"|"focus";changed:boolean;before:Record<string,string>;after:Record<string,string>;screenshot?:string}>;
   motion:Array<{selector:string;property:string;duration:string;timing:string;animation:string;source?:string;delay?:string;iterations?:string;playState?:string;keyframes?:Array<Record<string,string>>}>;
   ariaSnapshot:string;
 }
