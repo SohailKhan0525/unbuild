@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import { unbuild } from "./unbuild.js";
 
 function help(){
   console.log(`
@@ -10,17 +9,18 @@ Usage:
 
 Options:
   -o, --output <dir>       Output directory (default: ./unbuild-output)
-  --timeout <ms>            Browser timeout (default: 30000)
-  --pages <n>               Maximum same-origin pages (default: 12)
+  --timeout <ms>            Browser timeout (default 30000)
+  --pages <n>               Maximum same-origin pages (default 12)
   --browser <path>          Use an installed Chromium/Chrome/Edge executable
   --cdp <url>               Connect to an existing Chromium browser over CDP
-  --no-headless              Show Chromium while analyzing
-  --verbose                  Show detailed live progress (default)
-  --quiet                    Suppress live progress
+  --no-headless             Show Chromium while analyzing
+  --verbose                 Show detailed live progress (default)
+  --quiet                   Suppress live progress
   -h, --help                Show help
 
 Android / Termux:
-  Use --cdp with a Chromium-compatible browser exposed on a local CDP endpoint.
+  Playwright's bundled desktop browser is not an Android browser.
+  Use --cdp with an existing Chromium-compatible browser endpoint.
 `);
 }
 
@@ -41,15 +41,12 @@ for(let i=0;i<args.length;i++){
   if(args[i]==="--cdp") cdpEndpoint=args[++i];
 }
 try{
-  const verbose = !args.includes("--quiet");
+  const {unbuild}=await import("./unbuild.js");
+  const verbose=!args.includes("--quiet");
   const result=await unbuild(url,{
-    output,
-    timeout,
-    pages,
-    executablePath,
-    cdpEndpoint,
+    output,timeout,pages,executablePath,cdpEndpoint,
     headless:!args.includes("--no-headless"),
-    onProgress: verbose ? (message) => console.log(`[${new Date().toLocaleTimeString()}] ${message}`) : undefined
+    onProgress:verbose?(message)=>console.log(`[${new Date().toLocaleTimeString()}] ${message}`):undefined
   });
   console.log(`✓ Output: ${result.output}`);
   console.log(`✓ Screenshots: ${result.screenshots}`);
