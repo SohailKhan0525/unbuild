@@ -16,10 +16,10 @@ unbuild is a Node.js CLI with platform-neutral extraction code.
 
 - **Windows, macOS, Linux:** use Playwright's managed Chromium or an installed Chromium/Chrome/Edge binary.
 - **Linux ARM64/ARMv7 and other architectures:** use a compatible installed Chromium binary with `--browser` when Playwright's managed browser is unavailable.
-- **Android / Termux:** Node.js can run in Termux, but Playwright's bundled desktop Chromium is not an Android host browser. Use `--cdp` to connect unbuild to a Chromium-compatible browser exposing the Chrome DevTools Protocol.
+- **Android / Termux:** unbuild can launch the native Termux Chromium package directly when it is installed, or connect to any Chromium-compatible browser with `--cdp`.
 - **Other Unix-like environments:** use `--browser` or `--cdp` when a managed Playwright browser is unavailable.
 
-The npm package installs the Playwright Chromium browser during package installation on supported desktop platforms. If browser installation is intentionally skipped or unavailable, use `--browser` with an installed Chromium/Chrome/Edge binary or `--cdp` with an existing Chromium browser. Android / Termux uses CDP rather than the bundled desktop browser. The CLI also keeps browser initialization lazy so `unbuild --help` works on Android even though Playwright does not recognize Android as a local browser-host platform.
+The npm package installs the Playwright Chromium browser during package installation on supported desktop platforms. If browser installation is intentionally skipped or unavailable, use `--browser` with an installed Chromium/Chrome/Edge binary or `--cdp` with an existing Chromium browser. On Android / Termux, unbuild automatically uses the native Termux Chromium executable when present and applies the Android-compatible Playwright host workaround. The CLI keeps browser initialization lazy so `unbuild --help` works on Android.
 
 ## Install
 
@@ -73,19 +73,34 @@ unbuild https://www.example.com --cdp http://127.0.0.1:9222
 
 ### Android / Termux
 
-Android is the one platform where the browser engine needs special handling.
+Android needs a native browser executable because Playwright's bundled desktop Chromium is not an Android browser. unbuild now supports the native Chromium package shipped for Termux.
 
-A practical Android setup is:
+Install it once:
 
-1. Install Node.js and npm in Termux.
-2. Install `@agent-qofeno/unbuild`.
-3. Run or expose a Chromium-compatible browser with a Chrome DevTools Protocol endpoint.
-4. Run:
 ```bash
-npx @agent-qofeno/unbuild https://www.example.com --cdp http://127.0.0.1:9222
+pkg install x11-repo
+pkg install chromium
 ```
 
-The CDP endpoint can be local, ADB-forwarded, or provided by a remote browser service. The exact Android browser setup varies by device and ROM; unbuild does not require Android-specific native code. On Android/Termux, `--cdp` is required for an actual run; `--browser` is not a substitute for a browser that Playwright can launch natively.
+Then run unbuild normally; it automatically detects `/data/data/com.termux/files/usr/bin/chromium-browser`:
+
+```bash
+unbuild https://www.example.com
+```
+
+You can also provide the executable explicitly:
+
+```bash
+unbuild https://www.example.com --browser /data/data/com.termux/files/usr/bin/chromium-browser
+```
+
+If you already have a Chromium browser exposing CDP, use:
+
+```bash
+unbuild https://www.example.com --cdp http://127.0.0.1:9222
+```
+
+A CDP connection only works when a browser is actually listening on that endpoint. `ECONNREFUSED 127.0.0.1:9222` means nothing is listening there; unbuild cannot create an Android Chrome CDP endpoint by itself. For native Termux Chromium, use the automatic mode above.
 
 ## What it produces
 
