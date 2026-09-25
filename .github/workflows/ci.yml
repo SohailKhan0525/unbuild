@@ -58,7 +58,7 @@ jobs:
   published-npm-motion:
     needs: live-smoke
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -70,16 +70,18 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euxo pipefail
-          for i in $(seq 1 40); do
-            release_tag="$(gh release view --repo "${{ github.repository }}" --json tagName --jq '.tagName' 2>/dev/null || true)"
+          git fetch --tags --force
+          for i in $(seq 1 60); do
+            latest_tag="$(git tag --list 'v*' --sort=-version:refname | head -n 1)"
             npm_version="$(npm view @agent-qofeno/unbuild version 2>/dev/null || true)"
-            echo "release=${release_tag:-unknown} npm=${npm_version:-unknown}"
-            if [ -n "$release_tag" ] && [ "${release_tag#v}" = "$npm_version" ]; then
+            echo "latest_tag=${latest_tag:-unknown} npm=${npm_version:-unknown}"
+            if [ -n "$latest_tag" ] && [ "${latest_tag#v}" = "$npm_version" ]; then
               exit 0
             fi
             sleep 15
+            git fetch --tags --force
           done
-          echo "Published npm package did not converge on the latest GitHub release."
+          echo "Published npm package did not converge on the latest semantic-release tag."
           exit 1
       - name: Install Chromium
         run: sudo apt-get update && sudo apt-get install -y chromium
