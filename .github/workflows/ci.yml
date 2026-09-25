@@ -83,6 +83,17 @@ jobs:
           exit 1
       - name: Install Chromium
         run: sudo apt-get update && sudo apt-get install -y chromium
+      - name: Install published package locally
+        run: |
+          set -euxo pipefail
+          rm -rf /tmp/unbuild-published-install
+          mkdir -p /tmp/unbuild-published-install
+          cd /tmp/unbuild-published-install
+          npm init -y
+          npm install @agent-qofeno/unbuild
+          test -x node_modules/.bin/unbuild
+          npx unbuild --help
+
       - name: Run exact published npx command
         run: |
           set -euxo pipefail
