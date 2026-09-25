@@ -3,7 +3,6 @@
 **Deconstruct a rendered website into an evidence-backed design system for humans and coding agents.**
 
 [![npm](https://img.shields.io/npm/v/%40agent-qofeno%2Funbuild?style=flat-square)](https://www.npmjs.com/package/@agent-qofeno/unbuild)
-[![CI](https://img.shields.io/github/actions/workflow/status/SohailKhan0525/unbuild/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/SohailKhan0525/unbuild/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](./LICENSE)
 
 unbuild renders a public website in Chromium and **unbuilds what the browser can actually observe**: layout, typography, colors, spacing, radii, shadows, components, responsive behavior, motion evidence, links, controls, images, fonts, and screenshots.
@@ -22,6 +21,22 @@ unbuild is a Node.js CLI with platform-neutral extraction code.
 The npm package installs the Playwright Chromium browser during package installation on supported desktop platforms. If browser installation is intentionally skipped or unavailable, use `--browser` with an installed Chromium/Chrome/Edge binary or `--cdp` with an existing Chromium browser. On Android / Termux, unbuild automatically uses the native Termux Chromium executable when present and applies the Android-compatible Playwright host workaround. The CLI keeps browser initialization lazy so `unbuild --help` works on Android.
 
 ## Install and run
+
+### Install locally with npm
+
+For a normal project dependency, install the package locally:
+
+```bash
+npm install @agent-qofeno/unbuild
+```
+
+Then run the local CLI with:
+
+```bash
+npx unbuild https://www.example.com
+```
+
+The package exposes the `unbuild` executable through npm's local `node_modules/.bin` directory.
 
 ### Recommended: run directly with npx
 
