@@ -1,6 +1,6 @@
 # unbuild
 
-**Deconstruct a rendered website into an evidence-backed design system for humans and coding agents.**
+**Deconstruct a rendered website into evidence-backed UI, UX, design-system, responsive and motion artifacts for AI coding agents.**
 
 [![npm](https://img.shields.io/npm/v/%40agent-qofeno%2Funbuild?style=flat-square)](https://www.npmjs.com/package/@agent-qofeno/unbuild)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](./LICENSE)
@@ -333,7 +333,7 @@ An agent should reconstruct the **design language and observable interaction mod
 
 ## Releases
 
-Releases use Conventional Commits and semantic-release.
+Releases use Conventional Commits and semantic-release for npm versioning and publishing. GitHub Actions runs the release automation; the npm registry is the distribution source of truth.
 
 Examples:
 
