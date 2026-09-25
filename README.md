@@ -63,7 +63,7 @@ This:
 
 ```bash
 npm install @agent-qofeno/unbuild
-``
+```
 
 installs the package **locally in the current project**. It does not make the `unbuild` executable globally available, so typing `unbuild --help` directly in a Windows Command Prompt will not work from that installation.
 
@@ -178,11 +178,19 @@ unbuild-output/
 │   ├── images/
 │   ├── icons/
 │   ├── fonts/
-│   └── styles/
+│   ├── styles/
+│   └── media/
+├── styles/
+│   └── inventory.json
+├── accessibility/
+│   ├── summary.json
+│   └── axe-*.json
 ├── motion/
 │   └── summary.json
 └── ux/
-    └── summary.json
+    ├── summary.json
+    └── states/
+        └── *.png
 ```
 
 The exact files may grow as extraction capabilities expand.
@@ -345,7 +353,7 @@ refactor: simplify extraction pipeline
 test: cover responsive evidence
 ```
 
-The release workflow publishes through npm Trusted Publishing/OIDC rather than a long-lived npm publish token.
+Automated releases use npm Trusted Publishing (OIDC), so no long-lived npm publish token is stored in the repository.
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for release and contribution rules.
 
