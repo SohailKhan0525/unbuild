@@ -333,7 +333,7 @@ An agent should reconstruct the **design language and observable interaction mod
 
 ## Releases
 
-Releases use Conventional Commits and semantic-release for npm versioning and publishing. GitHub Actions runs the release automation; the npm registry is the distribution source of truth.
+Releases use Conventional Commits and semantic-release for npm versioning and publishing. The npm registry is the distribution source of truth.
 
 Examples:
 
