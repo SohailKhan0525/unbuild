@@ -42,9 +42,12 @@
   },
   "keywords": [
     "website",
+    "website-reconstruction",
+    "ui-reconstruction",
+    "frontend-reconstruction",
+    "browser-evidence",
     "website-analysis",
     "website-audit",
-    "web-scraping",
     "browser-automation",
     "playwright",
     "design-system",
