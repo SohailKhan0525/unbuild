@@ -37,8 +37,9 @@ jobs:
           set -euxo pipefail
           npm install --global npm@11.15.0
           node --version
-          npm --version
-          node -e "const [major, minor, patch] = process.versions.npm.split('.').map(Number); if (major < 11 || (major === 11 && (minor < 15 || (minor === 15 && patch < 0)))) process.exit(1)"
+          export NPM_VERSION="$(npm --version)"
+          echo "npm=$NPM_VERSION"
+          node -e "const [major, minor, patch] = process.env.NPM_VERSION.split('.').map(Number); if (major < 11 || (major === 11 && (minor < 15 || (minor === 15 && patch < 0)))) process.exit(1)"
 
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
