@@ -82,7 +82,5 @@
     "@semantic-release/release-notes-generator": "^14.0.3",
     "@semantic-release/npm": "^13.1.2"
   },
-  "author": {
-    "name": "qofeno-labs"
-  }
+  "author": "qofeno-labs"
 }
