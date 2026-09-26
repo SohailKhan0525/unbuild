@@ -1,4 +1,5 @@
 import type { PageEvidence } from "./extract.js";
+import { pageName } from "./naming.js";
 
 const top=(m:Record<string,number>,n=16,filter:(value:string)=>boolean=()=>true)=>
   Object.entries(m).filter(([k])=>filter(k)).sort((a,b)=>b[1]-a[1]).slice(0,n);
@@ -105,7 +106,7 @@ export function renderReport(d:PageEvidence,ai=false):string{
   return lines.join("\n");
 }
 
-export function renderAggregateReport(pages:PageEvidence[],source:string,ai=false):string{
+export function renderAggregateReport(pages:PageEvidence[],source:string,ai=false,resolveName:(url:string)=>string=pageName):string{
   if(!pages.length)return"# Unbuild\n\nNo pages were successfully analyzed.\n";
   const color:Record<string,number>={},font:Record<string,number>={},size:Record<string,number>={},radius:Record<string,number>={},space:Record<string,number>={},shadow:Record<string,number>={};
   const vars=new Map<string,string>(),assets=new Set<string>(),media=new Set<string>(),keyframes=new Set<string>();
@@ -143,7 +144,7 @@ export function renderAggregateReport(pages:PageEvidence[],source:string,ai=fals
     lines.push(...pageSummary(p));
     if(ai){
       lines.push("- Reconstruction focus: preserve the measured document dimensions, landmark hierarchy, typography, asset choices, responsive geometry and observed interaction/motion states.");
-      lines.push("- Evidence files: pages/"+p.url.replace(/[^a-zA-Z0-9._-]+/g,"-").slice(0,100)+".json is generated per route; use the actual filenames in the pages/ directory.");
+      const file=resolveName(p.url);\n      lines.push("- Evidence files: pages/"+file+".json, pages/"+file+".html, accessibility/desktop-"+file+".yml");
     }
   }
   lines.push("## Component inventory","","| Tag | Role | Count | Example |","|---|---|---:|---|",...componentRows(pages));
