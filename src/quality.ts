@@ -2,6 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { AxeBuilder } from "@axe-core/playwright";
 import type { Page } from "playwright";
+import { sanitizeSegment } from "./naming.js";
 
 export interface AccessibilityAuditSummary {
   engine: string;
@@ -16,9 +17,6 @@ export interface AccessibilityAuditSummary {
   minor: number;
 }
 
-function safeName(value:string):string {
-  return value.replace(/[^a-zA-Z0-9._-]+/g,"-").replace(/-+/g,"-").replace(/^-|-$/g,"").slice(0,80)||"page";
-}
 
 export async function captureAccessibilityAudit(
   page:Page,
@@ -57,7 +55,7 @@ export async function captureAccessibilityAudit(
     };
     await mkdir(join(output,"accessibility"),{recursive:true});
     await writeFile(
-      join(output,"accessibility",`axe-${safeName(viewport)}-${safeName(pageName)}.json`),
+      join(output,"accessibility",`axe-${sanitizeSegment(viewport,80)||"page"}-${sanitizeSegment(pageName,80)||"page"}.json`),
       JSON.stringify(report,null,2)
     );
     return summary;
@@ -101,7 +99,7 @@ export async function captureInteractionScreenshots(
       }
       await page.waitForTimeout(80);
       const index=String(results.length+1).padStart(2,"0");
-      const file=`${safeName(pageName)}-${index}-${state.state}.png`;
+      const file=`${sanitizeSegment(pageName,80)||"page"}-${index}-${state.state}.png`;
       await locator.screenshot({
         path:join(dir,file),
         animations:"disabled",
