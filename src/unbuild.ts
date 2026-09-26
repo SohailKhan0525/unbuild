@@ -6,6 +6,8 @@ import { extractPage, type PageEvidence } from "./extract.js";
 import { aggregateTokenEvidence, renderAggregateReport } from "./report.js";
 import { AssetCollector } from "./assets.js";
 import { captureAccessibilityAudit, captureInteractionScreenshots } from "./quality.js";
+import { NameRegistry, pageName, safeName } from "./naming.js";
+export { safeName } from "./naming.js";
 
 export interface UnbuildOptions {
   output?: string; pages?: number; timeout?: number;
@@ -27,8 +29,6 @@ const ANDROID_CHROMIUM_PATHS=[
   "/data/data/com.termux/files/usr/lib/chromium/chrome"
 ];
 
-export function safeName(value:string):string{return value.replace(/^https?:\/\//,"").replace(/[^a-zA-Z0-9._-]+/g,"-").replace(/-+/g,"-").replace(/^-|-$/g,"").slice(0,80)||"site";}
-function pageName(url:string):string{const u=new URL(url);const path=u.pathname.replace(/^\/|\/$/g,"").replace(/[^a-zA-Z0-9._-]+/g,"-");return path?path.slice(0,100):"home";}
 function progress(options:UnbuildOptions,message:string){options.onProgress?.(message);}
 async function withHeartbeat<T>(options:UnbuildOptions,message:string,operation:Promise<T>):Promise<T>{
   progress(options,message);const started=Date.now();const timer=setInterval(()=>progress(options,`${message} — ${Math.floor((Date.now()-started)/1000)}s elapsed`),5000);
@@ -197,8 +197,10 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
     progress(options,`Discovered ${urls.length} page(s).`);
     await writeFile(join(output,"evidence","pages.json"),JSON.stringify(urls,null,2));
 
+    const pageNames=new NameRegistry();
+    const nameByUrl=new Map<string,string>();
     for(let pageIndex=0;pageIndex<urls.length;pageIndex++){
-      const url=urls[pageIndex];const name=pageName(url);
+      const url=urls[pageIndex];const name=pageNames.take(pageName(url));nameByUrl.set(url,name);
       progress(options,`Analyzing page ${pageIndex+1}/${urls.length}: ${url}`);
       await page.clearConsoleMessages().catch(()=>{});await page.clearPageErrors().catch(()=>{});
       await withHeartbeat(options,`Loading page ${pageIndex+1}/${urls.length} — waiting for network idle`,page.goto(url,{waitUntil:"networkidle",timeout})).catch(async()=>{
@@ -271,8 +273,9 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
       await writeFile(join(output,"evidence","all-pages.json"),JSON.stringify(evidence,null,2));
       await writeFile(join(output,"tokens","tokens.json"),JSON.stringify(aggregateTokenEvidence(evidence),null,2));
       await writeFile(join(output,"components","components.json"),JSON.stringify(evidence.map(x=>({url:x.url,components:x.components,landmarks:x.landmarks,buttons:x.buttons})),null,2));
-      await writeFile(join(output,"DESIGN.md"),renderAggregateReport(evidence,root.toString()));
-      await writeFile(join(output,"AI.md"),renderAggregateReport(evidence,root.toString(),true));
+      const resolveName=(url:string)=>nameByUrl.get(url)??pageName(url);
+      await writeFile(join(output,"DESIGN.md"),renderAggregateReport(evidence,root.toString(),false,resolveName));
+      await writeFile(join(output,"AI.md"),renderAggregateReport(evidence,root.toString(),true,resolveName));
       await writeFile(join(output,"ux","summary.json"),JSON.stringify(evidence.map(x=>({url:x.url,viewport:x.viewport,headings:x.headings,controls:x.controls,buttons:x.buttons,forms:x.forms,navigation:x.navigation,landmarks:x.landmarks,interactionStates:x.interactionStates})),null,2));
       await writeFile(join(output,"ux","interaction-states.json"),JSON.stringify(evidence.map(x=>({url:x.url,states:x.interactionStates})),null,2));
       await writeFile(join(output,"motion","summary.json"),JSON.stringify(evidence.map(x=>({url:x.url,motion:x.motion,mediaQueries:x.styleRules.mediaQueries,keyframes:x.styleRules.keyframes})),null,2));
@@ -284,7 +287,8 @@ export async function unbuild(inputUrl:string,options:UnbuildOptions={}):Promise
       "Pages analyzed: "+evidence.length,
       "Viewports: "+viewports.map(v=>v.name+" ("+v.width+"×"+v.height+")").join(", "),"",
       "This directory contains browser-grounded evidence for rebuilding the observed frontend.",
-      "Use screenshots for visual truth, pages/*.html for rendered structure, pages/*.json for computed geometry/styles, accessibility/*.yml for semantics, accessibility/axe-*.json for automated WCAG findings, assets/ for reusable files, styles/inventory.json for CSS structure and referenced assets, responsive/*.json for breakpoint behavior, and ux/motion for interaction evidence.",""
+      "Use screenshots for visual truth, pages/*.html for rendered structure, pages/*.json for computed geometry/styles, accessibility/*.yml for semantics, accessibility/axe-*.json for automated WCAG findings, assets/ for reusable files, styles/inventory.json for CSS structure and referenced assets, responsive/*.json for breakpoint behavior, components/screenshots/*.png plus components/*-screenshots.json for cropped section-level screenshots, and ux/motion for interaction evidence.",
+      "Each page's files share one name derived from its URL path (\"/\" -> home, \"/docs\" -> docs). If two pages would collide on that name, later ones are suffixed -2, -3, etc. — read evidence/pages.json or the \"Evidence files\" line for that page in AI.md/DESIGN.md for the exact filename rather than re-deriving it from the URL.",""
     ].join("\n"));
     progress(options,`Complete — ${evidence.length} page(s), ${evidence.length*viewports.length} screenshot(s)`);
     return{output,pages:evidence.length,screenshots:evidence.length*viewports.length};
