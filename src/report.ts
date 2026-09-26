@@ -144,7 +144,8 @@ export function renderAggregateReport(pages:PageEvidence[],source:string,ai=fals
     lines.push(...pageSummary(p));
     if(ai){
       lines.push("- Reconstruction focus: preserve the measured document dimensions, landmark hierarchy, typography, asset choices, responsive geometry and observed interaction/motion states.");
-      const file=resolveName(p.url);\n      lines.push("- Evidence files: pages/"+file+".json, pages/"+file+".html, accessibility/desktop-"+file+".yml");
+      const file=resolveName(p.url);
+      lines.push("- Evidence files: pages/"+file+".json, pages/"+file+".html, accessibility/desktop-"+file+".yml");
     }
   }
   lines.push("## Component inventory","","| Tag | Role | Count | Example |","|---|---|---:|---|",...componentRows(pages));
