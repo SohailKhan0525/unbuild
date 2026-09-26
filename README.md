@@ -157,22 +157,26 @@ unbuild-output/
 ├── AI.md
 ├── DESIGN.md
 ├── evidence/
-│   ├── pages.json
-│   └── all-pages.json
+│   ├── pages.json              # discovered same-origin URLs, in crawl order
+│   ├── all-pages.json          # every page's full extracted evidence, combined
+│   └── <page>-runtime.json     # per-page browser console messages and page errors
 ├── pages/
-│   └── *.json
+│   ├── <page>.json             # per-page computed geometry/style/DOM evidence
+│   └── <page>.html             # per-page rendered HTML snapshot
 ├── responsive/
-│   ├── desktop-*.json
-│   ├── tablet-*.json
-│   └── mobile-*.json
+│   ├── desktop-<page>.json
+│   ├── tablet-<page>.json
+│   └── mobile-<page>.json
 ├── screenshots/
-│   ├── desktop/
-│   ├── tablet/
-│   └── mobile/
+│   ├── desktop/<page>.png
+│   ├── tablet/<page>.png
+│   └── mobile/<page>.png
 ├── tokens/
 │   └── tokens.json
 ├── components/
-│   └── components.json
+│   ├── components.json         # aggregated component/landmark/button inventory
+│   ├── <page>-screenshots.json # manifest of cropped component screenshots below
+│   └── screenshots/*.png       # cropped screenshots of header/nav/main/footer/etc.
 ├── assets/
 │   ├── manifest.json
 │   ├── images/
@@ -183,15 +187,19 @@ unbuild-output/
 ├── styles/
 │   └── inventory.json
 ├── accessibility/
-│   ├── summary.json
-│   └── axe-*.json
+│   ├── summary.json            # aggregated axe pass/violation counts per page+viewport
+│   ├── axe-<viewport>-<page>.json  # full axe results for one page at one viewport
+│   ├── desktop-<page>.yml      # ARIA/accessibility-tree snapshot (page-load viewport)
+│   └── <viewport>-<page>.yml   # ARIA/accessibility-tree snapshot per viewport
 ├── motion/
 │   └── summary.json
 └── ux/
     ├── summary.json
-    └── states/
-        └── *.png
+    ├── interaction-states.json # hover/focus state deltas actually observed
+    └── states/*.png            # screenshots of those changed hover/focus states
 ```
+
+<page> is the filesystem-safe slug derived from that page's URL path (e.g. `/docs/setup` → `docs-setup`, `/` → `home`). If two different pages would slug to the same name, later ones get `-2`, `-3`, etc. appended — always read the actual filenames present in `pages/`, `evidence/pages.json`, or the "Evidence files" line for that page in `AI.md`/`DESIGN.md` rather than re-deriving the slug yourself.
 
 The exact files may grow as extraction capabilities expand.
 
