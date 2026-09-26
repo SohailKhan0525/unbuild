@@ -4,6 +4,7 @@ import { basename, extname, join } from "node:path";
 import postcss from "postcss";
 import type { Page, Request } from "playwright";
 import { assertPublicUrl } from "./discover.js";
+import { sanitizeSegment } from "./naming.js";
 
 export interface AssetRecord {
   id:string; source:string; localPath:string|null;
@@ -34,7 +35,7 @@ function classify(request:Request,contentType:string):AssetRecord["type"]|null{
   return null;
 }
 function assetId(url:string){return createHash("sha256").update(url).digest("hex").slice(0,16)}
-function safeBase(url:string){try{return(basename(new URL(url).pathname)||"asset").replace(/[^a-zA-Z0-9._-]+/g,"-").slice(0,80)||"asset"}catch{return"asset"}}
+function safeBase(url:string){try{return sanitizeSegment(basename(new URL(url).pathname)||"asset",80)||"asset"}catch{return"asset"}}
 function folderFor(type:AssetRecord["type"]){return type==="font"?"fonts":type==="stylesheet"?"styles":type==="icon"?"icons":type==="media"?"media":type==="manifest"?"manifests":"images"}
 function classifyCssAsset(url:string,property?:string):AssetRecord["type"]{
   const value=url.split("#")[0].split("?")[0].toLowerCase();
